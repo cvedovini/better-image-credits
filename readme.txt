@@ -25,7 +25,7 @@ and `after`).
 - Use the `the_image_credits()` template tag (optional parameters are `sep`,
  `before` and `after`).
 - Let the plugin automatically display the credits for you, before or after the
-content or overlayed above each image.
+content or overlaid above each image.
 
 See the settings page to choose how you display the credits, including the HTML
 used to build them.

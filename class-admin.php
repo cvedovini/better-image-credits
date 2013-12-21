@@ -40,7 +40,7 @@ class BetterImageCreditsAdmin {
 			_e('After the content', 'better-image-credits'); ?></label></p>
 		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_OVERLAY;?>"
 			<?php checked($this->plugin->display_option(IMAGE_CREDIT_OVERLAY)); ?>><?php
-			_e('Overlay on images (results vary depending on your theme)', 'better-image-credits'); ?></label></p>
+			_e('Overlay on images (results may vary depending on your theme)', 'better-image-credits'); ?></label></p>
 		<p><em><?php _e('Choose how you want to display the image credits', 'better-image-credits'); ?></em></p>
 	<?php }
 
