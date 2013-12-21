@@ -17,18 +17,18 @@ by [Adam Capriola](http://profiles.wordpress.org/adamcapriola/). It is 100%
 compatible, if you are already using the Image Credit plugin just replace it
 with this one and it will work about the same way, except you will have more control.
 
-This plugins adds credits and link fields to media uploads and offer several
+This plugin adds credits and link fields to media uploads and offer several
 options to display image credits on your posts and pages. You can either:
 
 - Use the [image-credit] shortcode (optional attributes are `sep`, `before`
 and `after`).
 - Use the `the_image_credits()` template tag (optional parameters are `sep`,
-`before` and `after`).
+ `before` and `after`).
 - Let the plugin automatically display the credits for you, before or after the
 content or overlayed above each image.
 
 See the settings page to choose how you display the credits, including the HTML
-used to build the list of credits.
+used to build them.
 
 
 == Installation ==
