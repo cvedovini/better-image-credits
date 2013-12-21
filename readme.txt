@@ -12,11 +12,6 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-This plugin is a fork of the [Image Credits plugin](http://wordpress.org/plugins/image-credits/)
-by [Adam Capriola](http://profiles.wordpress.org/adamcapriola/). It is 100%
-compatible, if you are already using the Image Credit plugin just replace it
-with this one and it will work about the same way, except you will have more control.
-
 This plugin adds credits and link fields to media uploads and offer several
 options to display image credits on your posts and pages. You can either:
 
@@ -29,6 +24,11 @@ content or overlaid above each image.
 
 See the settings page to choose how you display the credits, including the HTML
 used to build them.
+
+This plugin is a fork of the [Image Credits plugin](http://wordpress.org/plugins/image-credits/)
+by [Adam Capriola](http://profiles.wordpress.org/adamcapriola/). It is 100%
+compatible, if you are already using the Image Credit plugin just replace it
+with this one and it will work about the same way, except you will have more control.
 
 
 == Installation ==
