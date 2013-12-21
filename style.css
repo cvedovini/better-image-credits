@@ -1,0 +1,24 @@
+.credits-overlay {
+	margin: 0;
+	padding: 5px 10px;
+	background-color: black;
+	opacity: 0.5;
+	text-align: right;
+	box-sizing: border-box;
+	display: none;
+	position: absolute;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.credits-overlay:hover {
+	opacity: 1;
+}
+
+.credits-overlay p {
+	margin: 0;
+}
+
+.image-credits {
+	clear: both;
+}
