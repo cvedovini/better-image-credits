@@ -43,5 +43,18 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 == Changelog ==
 
+= Version 1.1 =
+- Added French translations
+- Added Dutch translations
+
 = Version 1.0 =
 - Initial release
+
+
+== Credits ==
+
+Following is the list of people and projects who helped me with this plugin,
+many thanks to them :)
+
+- [Jan Spoelstra](http://www.linkedin.com/in/janspoelstra): Contributed the
+Dutch translations.
