@@ -5,7 +5,7 @@ Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin
 Tags: image, media, credits
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -46,6 +46,7 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 = Version 1.1 =
 - Added French translations
 - Added Dutch translations
+- Removed overlay script dependency on `jquery.tools`, replaced with `jquery`
 
 = Version 1.0 =
 - Initial release
