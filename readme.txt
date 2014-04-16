@@ -4,7 +4,7 @@ Contributors: cvedovini
 Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 Tags: image, media, credits
 Requires at least: 3.0
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: 1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
