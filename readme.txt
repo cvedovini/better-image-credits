@@ -5,7 +5,7 @@ Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin
 Tags: image, media, credits
 Requires at least: 3.0
 Tested up to: 3.9
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,6 +43,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 == Changelog ==
 
+= Version 1.2 =
+- Added Italian and Serbian translations
+
 = Version 1.1 =
 - Added French translations
 - Added Dutch translations
@@ -59,3 +62,7 @@ many thanks to them :)
 
 - [Jan Spoelstra](http://www.linkedin.com/in/janspoelstra): Contributed the
 Dutch translations.
+- Borisa Djuraskovic from [Web Hosting Hub](http://www.webhostinghub.com/): Contributed
+the Serbian translations.
+- [Luca Palli](http://lpal.li/): Contributed the Italian translations.
+
