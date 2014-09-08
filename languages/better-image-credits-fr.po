@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Better Image Credits package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Better Image Credits 1.2\n"
+"Project-Id-Version: Better Image Credits\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/better-image-credits\n"
-"POT-Creation-Date: 2013-12-21 06:02:33+00:00\n"
-"PO-Revision-Date: 2014-08-08 20:38+0700\n"
+"POT-Creation-Date: 2014-09-08 17:33:01+00:00\n"
+"PO-Revision-Date: 2014-09-09 00:43+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -13,70 +13,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.6.7\n"
-"X-POOTLE-MTIME: 1387607769.0\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-POOTLE-MTIME: 1410198058.0\n"
 
-#: better-image-credits.php:30 class-admin.php:15
+#: better-image-credits.php:31 class-admin.php:18
 msgid "Image Credits"
 msgstr "Attribution des images"
 
-#: better-image-credits.php:150 class-admin.php:110
-msgid "Credits"
-msgstr "Attribution"
-
-#: better-image-credits.php:153
-msgid "Source name of the image."
-msgstr "Nom de la source de l'image"
-
-#: better-image-credits.php:157
-msgid "Link"
-msgstr "Lien"
-
-#: better-image-credits.php:160
-msgid "URL where the original image was found."
-msgstr "URL où l'image originale a été trouvée."
-
-#: class-admin.php:15 class-admin.php:68
+#: class-admin.php:18 class-admin.php:78
 msgid "Image Credits Options"
 msgstr "Options pour les attributions d'images"
 
-#: class-admin.php:17
+#: class-admin.php:20
 msgid "Display Credits"
 msgstr "Afficher les attributions"
 
-#: class-admin.php:18
+#: class-admin.php:21
+msgid "Template"
+msgstr "Modèle"
+
+#: class-admin.php:22
 msgid "Separator"
 msgstr "Séparateur"
 
-#: class-admin.php:19
+#: class-admin.php:23
 msgid "Before"
 msgstr "Avant"
 
-#: class-admin.php:20
+#: class-admin.php:24
 msgid "After"
 msgstr "Après"
 
-#: class-admin.php:30
+#: class-admin.php:34
 msgid "Settings"
 msgstr "Paramètres"
 
-#: class-admin.php:37
+#: class-admin.php:41
 msgid "Before the content"
 msgstr "Avant le contenu"
 
-#: class-admin.php:40
+#: class-admin.php:44
 msgid "After the content"
 msgstr "Après le contenu"
 
-#: class-admin.php:43
+#: class-admin.php:47
 msgid "Overlay on images (results may vary depending on your theme)"
 msgstr "Par dessus les images (le résultat peut varier suivant votre thème)"
 
-#: class-admin.php:44
+#: class-admin.php:48
 msgid "Choose how you want to display the image credits"
 msgstr "Choisissez comment afficher les attributions d'images"
 
-#: class-admin.php:50
+#: class-admin.php:54
+msgid ""
+"HTML to output each individual credit line. Use [title], [source], [link] or "
+"[license] as placeholders."
+msgstr ""
+"HTML affichant les attributions individuelles. Utiliser [title], [source], "
+"[link] ou [license] comme marqueurs."
+
+#: class-admin.php:60
 msgid ""
 "HTML to separate the credits (enter leading and trailing spaces using HTML "
 "entities)."
@@ -84,7 +80,7 @@ msgstr ""
 "HTML séparant les attributions (indiquer un espace au début ou à la fin en "
 "utilisant des entités HTML)."
 
-#: class-admin.php:56
+#: class-admin.php:66
 msgid ""
 "HTML to output before the credits (enter leading and trailing spaces using "
 "HTML entities)."
@@ -92,7 +88,7 @@ msgstr ""
 "HTML à afficher avant les attributions (indiquer un espace au début ou à la "
 "fin en utilisant des entités HTML)."
 
-#: class-admin.php:62
+#: class-admin.php:72
 msgid ""
 "HTML to output after the credits (enter leading and trailing spaces using "
 "HTML entities)."
@@ -100,25 +96,25 @@ msgstr ""
 "HTML à afficher après les attributions (indiquer un espace au début ou à la "
 "fin en utilisant des entités HTML)."
 
-#: class-admin.php:71
+#: class-admin.php:81
 msgid "Options"
 msgstr "Paramètres"
 
-#: class-admin.php:84
+#: class-admin.php:94
 msgid "Do you like this Plugin?"
 msgstr "Appréciez-vous cette extension?"
 
-#: class-admin.php:86
+#: class-admin.php:96
 msgid "Please consider a donation."
 msgstr "Merci de penser à une donation."
 
-#: class-admin.php:96
+#: class-admin.php:106
 msgid "We also need volunteers to translate that plugin into more languages."
 msgstr ""
 "Nous avons également besoin de volontaires pour traduire cette extension "
 "dans plus de langues."
 
-#: class-admin.php:97
+#: class-admin.php:107
 msgid ""
 "If you wish to help then contact <a href=\"https://twitter.com/cvedovini"
 "\">@cvedovini</a> on Twitter or use that <a href=\"http://vedovini.net/"
@@ -127,6 +123,30 @@ msgstr ""
 "Si vous souhaitez aider merci de contacter <a href=\"https://twitter.com/"
 "cvedovini\">@cvedovini</a> sur Twitter ou bien utilisez ce <a href=\"http://"
 "vedovini.net/contact/\">formulaire de contact</a>."
+
+#: class-admin.php:120 class-admin.php:141
+msgid "Credits"
+msgstr "Attribution"
+
+#: class-admin.php:144
+msgid "Source name of the image."
+msgstr "Nom de la source de l'image"
+
+#: class-admin.php:148
+msgid "Link"
+msgstr "Lien"
+
+#: class-admin.php:151
+msgid "URL where the original image was found."
+msgstr "URL où l'image originale a été trouvée."
+
+#: class-admin.php:155
+msgid "License"
+msgstr "Licence"
+
+#: class-admin.php:158
+msgid "License for this image."
+msgstr "Licence pour cette image."
 
 #. Plugin Name of the plugin/theme
 msgid "Better Image Credits"
