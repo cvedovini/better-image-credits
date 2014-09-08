@@ -3,7 +3,7 @@
 Plugin Name: Better Image Credits
 Plugin URI: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
-Version: 1.2
+Version: 1.3
 Author: Claude Vedovini
 Author URI: http://vedovini.net/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 License: GPLv3
@@ -26,9 +26,10 @@ Text Domain: better-image-credits
 */
 
 
+define('IMAGE_CREDITS_TEMPLATE', get_option('better-image-credits_template', '<a href="[link]" target="_blank">[source]</a>'));
 define('IMAGE_CREDITS_SEP', get_option('better-image-credits_sep', ',&#32;'));
 define('IMAGE_CREDITS_BEFORE', get_option('better-image-credits_before', '<p class="image-credits">' . __('Image Credits', 'better-image-credits') . ':&#32;'));
-define('IMAGE_CREDITS_AFTER', get_option('better-image-credits_after', '</p>'));
+define('IMAGE_CREDITS_AFTER', get_option('better-image-credits_after', '.</p>'));
 
 define('IMAGE_CREDIT_BEFORE_CONTENT', 'before');
 define('IMAGE_CREDIT_AFTER_CONTENT', 'after');
@@ -48,81 +49,23 @@ class BetterImageCreditsPlugin {
 		add_filter('load_textdomain_mofile', array(&$this, 'smarter_load_textdomain'), 10, 2);
 		load_plugin_textdomain('better-image-credits', false, dirname(plugin_basename(__FILE__)) . '/languages/' );
 
-		// Manage additional media fields
-		add_filter('attachment_fields_to_edit', array($this, 'add_fields' ), 10, 2);
-		add_filter('attachment_fields_to_save', array($this, 'save_fields' ), 10 , 2);
-
 		if (!is_admin()) {
 			// Shortcode
 			add_shortcode('image-credits', array($this, 'credits_shortcode'));
 
 			if ($this->display_option(IMAGE_CREDIT_BEFORE_CONTENT) ||
-					$this->display_option(IMAGE_CREDIT_AFTER_CONTENT)) {
-				add_filter('the_content', array($this, 'filter_content'), 0);
+					$this->display_option(IMAGE_CREDIT_AFTER_CONTENT) ||
+					$this->display_option(IMAGE_CREDIT_OVERLAY)) {
+				add_filter('the_content', array($this, 'add_credits'), 0);
 			}
 
 			if ($this->display_option(IMAGE_CREDIT_OVERLAY)) {
 				wp_register_style('better-image-credits', plugins_url('style.css', __FILE__), false, '1.0');
 				wp_register_script('better-image-credits', plugins_url('script.js', __FILE__), array('jquery'), '1.0', true);
 				add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts'));
-				add_filter('post_thumbnail_html', array($this, 'filter_post_thumbnail'), 10, 5);
-				add_filter('the_content', array($this, 'filter_content_images'), 20);
 				add_filter('wp_get_attachment_image_attributes', array($this, 'filter_attachment_image_attributes'), 10, 2);
 			}
 		}
-	}
-
-	function display_option($option) {
-		$options = get_option('better-image-credits_display', array());
-		if (!is_array($options)) $options = array($options);
-		return in_array($option, $options);
-	}
-
-	function enqueue_scripts() {
-		wp_enqueue_style('better-image-credits');
-		wp_enqueue_script('better-image-credits');
-	}
-
-	function filter_post_thumbnail($html, $post_id, $post_thumbnail_id, $size, $attr) {
-		return $html . $this->get_overlay($post_thumbnail_id, '.wp-image-' . $post_thumbnail_id);
-	}
-
-	function filter_content_images($content) {
-		$attachment_ids = array();
-
-		if (preg_match_all('/wp-image-(\d+)/i', $content, $matches)) {
-			foreach ($matches[1] as $id) {
-				if (!in_array($id, $attachment_ids)) {
-					$attachment_ids[] = $id;
-					$content .= $this->get_overlay($id, '.wp-image-' . $id);
-				}
-			}
-		}
-
-		return $content;
-	}
-
-	function filter_attachment_image_attributes($attr, $attachment) {
-		$attr['class'] = $attr['class'] . ' wp-image-' . $attachment->ID;
-		return $attr;
-	}
-
-	function get_overlay($post_thumbnail_id, $target) {
-		$credit_source = esc_attr(get_post_meta($post_thumbnail_id, '_wp_attachment_source_name', true));
-		$credit_link = esc_url(get_post_meta($post_thumbnail_id, '_wp_attachment_source_url', true));
-
-		if (!empty($credit_source)) {
-			if (empty($credit_link)) {
-				$credits = $credit_source;
-			} else {
-				$credits = '<a href="' . $credit_link . '">' . $credit_source . '</a>';
-			}
-
-			# $credits = IMAGE_CREDITS_BEFORE . $credits . IMAGE_CREDITS_AFTER;
-			return '<div class="credits-overlay" data-target="' . $target . '">' . $credits . '</div>';
-		}
-
-		return '';
 	}
 
 	function admin_init() {
@@ -145,61 +88,26 @@ class BetterImageCreditsPlugin {
 		return $mofile;
 	}
 
-	function add_fields($form_fields, $post) {
-		$form_fields['credits_source'] = array(
-				'label' => __( 'Credits', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_name', true),
-				'helps' => __( 'Source name of the image.', 'better-image-credits' )
-		);
-
-		$form_fields['credits_link'] = array(
-				'label' => __( 'Link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_url', true),
-				'helps' => __( 'URL where the original image was found.', 'better-image-credits' )
-		);
-
-		return $form_fields;
+	function enqueue_scripts() {
+		wp_enqueue_style('better-image-credits');
+		wp_enqueue_script('better-image-credits');
 	}
 
-	function save_fields($post, $attachment) {
-		if (isset($attachment['credits_source'])) {
-			$credits_source = get_post_meta($post['ID'], '_wp_attachment_source_name', true);
-
-			if ($credits_source != esc_attr($attachment['credits_source'])) {
-				if (empty($attachment['credits_source'])) {
-					delete_post_meta($post['ID'], '_wp_attachment_source_name');
-				} else {
-					update_post_meta($post['ID'], '_wp_attachment_source_name', esc_attr($attachment['credits_source']));
-				}
-			}
-		}
-
-		if (isset($attachment['credits_link'])) {
-			$credits_link = get_post_meta($post['ID'], '_wp_attachment_source_url', true);
-
-			if ($credits_link != esc_url( $attachment['credits_link'])) {
-				if (empty($attachment['credits_link'])) {
-					delete_post_meta($post['ID'], '_wp_attachment_source_url');
-				} else {
-					update_post_meta($post['ID'], '_wp_attachment_source_url', esc_url( $attachment['credits_link']));
-				}
-			}
-		}
-
-		return $post;
-
+	function display_option($option) {
+		$options = get_option('better-image-credits_display', array());
+		if (!is_array($options)) $options = array($options);
+		return in_array($option, $options);
 	}
 
 	function get_image_credits() {
 		global $post;
+		$post_thumbnail_id = 0;
 		$attachment_ids = array();
 		$credits = array();
 
 		// First check for post thumbnail and save its ID in an array
 		if (function_exists('has_post_thumbnail') && has_post_thumbnail($post->ID)) {
-			$attachment_ids[] = get_post_thumbnail_id($post->ID);
+			$attachment_ids[] = $post_thumbnail_id = get_post_thumbnail_id($post->ID);
 		}
 
 		// Next look in post content and check for instances of wp-image-[digits]
@@ -213,15 +121,16 @@ class BetterImageCreditsPlugin {
 
 		// Go through all our attachments IDs and generate credits
 		foreach ($attachment_ids as $id) {
-			$credit_source = esc_attr(get_post_meta($id, '_wp_attachment_source_name', true));
-			$credit_link = esc_url(get_post_meta($id, '_wp_attachment_source_url', true));
+			$att = get_post($id);
+			$title = $att->post_title;
+			$source = esc_attr(get_post_meta($id, '_wp_attachment_source_name', true));
+			$link = esc_url(get_post_meta($id, '_wp_attachment_source_url', true));
+			$license = esc_attr(get_post_meta($id, '_wp_attachment_license', true));
 
-			if (!empty($credit_source)) {
-				if (empty($credit_link)) {
-					$credits[] = $credit_source;
-				} else {
-					$credits[] = '<a href="' . $credit_link . '">' . $credit_source . '</a>';
-				}
+			if (!empty($source)) {
+				$credits[$id] = str_replace(array('[title]', '[source]', '[link]', '[license]'),
+						array($title, $source, $link, $license),
+						IMAGE_CREDITS_TEMPLATE);
 			}
 		}
 
@@ -239,8 +148,10 @@ class BetterImageCreditsPlugin {
 	}
 
 	function the_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE, $after=IMAGE_CREDITS_AFTER) {
-		$credits = $this->get_image_credits();
+		return $this->format_credits($this->get_image_credits(), $sep, $before, $after);
+	}
 
+	function format_credits($credits, $sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE, $after=IMAGE_CREDITS_AFTER) {
 		if (!empty($credits)) {
 			$credits = implode($sep, $credits);
 			return $before . $credits. $after;;
@@ -249,19 +160,32 @@ class BetterImageCreditsPlugin {
 		return '';
 	}
 
-	function filter_content($content) {
-		$credits = $this->the_image_credits();
+	function add_credits($content) {
+		$credits = $this->get_image_credits();
+		$output = $this->format_credits($credits);
 
 		if ($this->display_option(IMAGE_CREDIT_BEFORE_CONTENT)) {
-			$content = $credits . $content;
+			$content = $output . $content;
 		}
 
 		if ($this->display_option(IMAGE_CREDIT_AFTER_CONTENT)) {
-			$content = $content . $credits;
+			$content = $content . $output;
+		}
+
+		if ($this->display_option(IMAGE_CREDIT_OVERLAY)) {
+			foreach ($credits as $id => $c) {
+				$content = $content . '<div class="credits-overlay" data-target=".wp-image-' . $id . '">' . $c . '</div>';
+			}
 		}
 
 	    return $content;
 	}
+
+	function filter_attachment_image_attributes($attr, $attachment) {
+		$attr['class'] = $attr['class'] . ' wp-image-' . $attachment->ID;
+		return $attr;
+	}
+
 }
 
 global $the_better_image_credits_plugin;

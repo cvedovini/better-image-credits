@@ -1,17 +1,32 @@
 jQuery(document).ready(function($) {
 	$('.credits-overlay').each(function() {
 		var $overlay = $(this).detach();
+		$targets = 'img' + $overlay.data('target');
 
-		$($overlay.data('target')).each(function() {
+		$($targets).each(function() {
 			$target = $(this);
 
-			$the_overlay = $overlay.clone().appendTo('body');
-			$the_overlay.outerWidth($target.innerWidth());
-			$pos = $target.offset();
-			$the_overlay.offset({ left: $pos.left, top: $pos.top + $target.innerHeight() - $the_overlay.outerHeight() });
-			$the_overlay.css({ borderBottomLeftRadius: $target.css('border-bottom-left-radius'),
+			$container = $('<div class="credits-container"></div>');
+			$container.addClass($target.attr('class'));
+
+			$the_overlay = $overlay.clone().appendTo($container);
+			$the_overlay.css({
+				width: $target.css('width'),
+				marginRight: $target.css('margin-right'),
+				marginLeft: $target.css('margin-left'),
+				marginBottom: $target.css('margin-bottom'),
+				borderBottomLeftRadius: $target.css('border-bottom-left-radius'),
 				borderBottomRightRadius: $target.css('border-bottom-right-radius') });
-			$the_overlay.show();
+
+			$parent = $target.parent();
+
+			if ($parent.is('a')) {
+				$parent.clone().prependTo($container);
+				$parent.replaceWith($container);
+			} else {
+				$target.clone().prependTo($container);
+				$target.replaceWith($container);
+			}
 		});
 
 		$overlay.remove();

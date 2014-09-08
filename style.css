@@ -1,21 +1,36 @@
 .credits-overlay {
+	display: none;
+}
+
+.credits-container {
+	position: relative;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.credits-container .credits-overlay {
 	margin: 0;
 	padding: 5px 10px;
-	background-color: black;
+	background-color: white;
 	opacity: 0.5;
 	text-align: right;
 	box-sizing: border-box;
-	display: none;
+	display: block;
 	position: absolute;
 	overflow: hidden;
-	white-space: nowrap;
+	left: 0;
+	bottom: 0;
 }
 
-.credits-overlay:hover {
+.credits-container:hover .credits-overlay {
+	opacity: 0.9;
+}
+
+.credits-container:hover .credits-overlay * {
 	opacity: 1;
 }
 
-.credits-overlay p {
+.credits-container .credits-overlay p {
 	margin: 0;
 }
 
