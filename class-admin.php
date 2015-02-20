@@ -193,7 +193,7 @@ class BetterImageCreditsAdmin {
 				if (empty($attachment['license'])) {
 					delete_post_meta($post['ID'], '_wp_attachment_license');
 				} else {
-					update_post_meta($post['ID'], '_wp_attachment_license', esc_url($attachment['license']));
+					update_post_meta($post['ID'], '_wp_attachment_license', esc_attr($attachment['license']));
 				}
 			}
 		}
