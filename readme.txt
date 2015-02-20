@@ -48,6 +48,7 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 - Added templating for the individual credits
 - Added a license field
 - Simplified and moved around some code
+- Added support for image galleries
 
 = Version 1.2 =
 - Added Italian and Serbian translations
@@ -71,4 +72,6 @@ Dutch translations.
 - Borisa Djuraskovic from [Web Hosting Hub](http://www.webhostinghub.com/): Contributed
 the Serbian translations.
 - [Luca Palli](http://lpal.li/): Contributed the Italian translations.
+- [joerns](https://wordpress.org/support/profile/joerns): Contributed the code
+to support the galleries.
 
