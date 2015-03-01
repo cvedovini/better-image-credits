@@ -3,7 +3,7 @@
 Plugin Name: Better Image Credits
 Plugin URI: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
-Version: 1.3
+Version: 1.4
 Author: Claude Vedovini
 Author URI: http://vedovini.net/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 License: GPLv3
@@ -34,12 +34,16 @@ define('IMAGE_CREDITS_AFTER', get_option('better-image-credits_after', '.</p>'))
 define('IMAGE_CREDIT_BEFORE_CONTENT', 'before');
 define('IMAGE_CREDIT_AFTER_CONTENT', 'after');
 define('IMAGE_CREDIT_OVERLAY', 'overlay');
+define('IMAGE_CREDIT_INCLUDE_BACKGROUND', 'background');
+define('IMAGE_CREDIT_INCLUDE_HEADER', 'header');
 
+include 'class-credits-widget.php';
 
 class BetterImageCreditsPlugin {
 
 	function __construct() {
 		add_action('init', array($this, 'init'));
+		add_action('widgets_init', array(&$this, 'widgets_init'));
 		add_action('admin_menu', array(&$this, 'admin_init'));
 	}
 
@@ -66,6 +70,10 @@ class BetterImageCreditsPlugin {
 				add_filter('wp_get_attachment_image_attributes', array($this, 'filter_attachment_image_attributes'), 10, 2);
 			}
 		}
+	}
+
+	function widgets_init() {
+		register_widget('BetterImageCreditsWidget');
 	}
 
 	function admin_init() {
@@ -105,7 +113,37 @@ class BetterImageCreditsPlugin {
 		$attachment_ids = array();
 		$credits = array();
 
-		// First check for post thumbnail and save its ID in an array
+		// Check for header image
+		if ($this->display_option(IMAGE_CREDIT_INCLUDE_HEADER)) {
+			$query_images = new WP_Query(array(
+					'post_type' => 'attachment',
+					'post_status' => 'inherit',
+					'meta_key' => '_wp_attachment_is_custom_header',
+					'meta_value' => get_option('stylesheet')));
+
+			foreach ($query_images->posts as $image) {
+				if (get_header_image() != $image->guid) continue;
+				$attachment_ids[] = $image->ID;
+				break;
+			}
+		}
+
+		// Check for background image
+		if ($this->display_option(IMAGE_CREDIT_INCLUDE_BACKGROUND)) {
+			$query_images = new WP_Query(array(
+					'post_type' => 'attachment',
+					'post_status' => 'inherit',
+					'meta_key' => '_wp_attachment_is_custom_background',
+					'meta_value' => get_option('stylesheet')));
+
+			foreach ($query_images->posts as $image) {
+				if (get_background_image() != $image->guid) continue;
+				$attachment_ids[] = $image->ID;
+				break;
+			}
+		}
+
+		// Check for post thumbnail and save its ID in an array
 		if (function_exists('has_post_thumbnail') && has_post_thumbnail($post->ID)) {
 			$attachment_ids[] = $post_thumbnail_id = get_post_thumbnail_id($post->ID);
 		}
@@ -118,6 +156,30 @@ class BetterImageCreditsPlugin {
 				}
 			}
 		}
+
+		// Finally check for galleries
+		$pattern = get_shortcode_regex();
+		if (preg_match_all('/'. $pattern .'/s', $post->post_content, $matches)
+				&& array_key_exists(2, $matches)
+				&& in_array('gallery', $matches[2])) {
+			foreach($matches[2] as $index => $tag){
+				if ($tag == 'gallery') {
+					$params = shortcode_parse_atts($matches[3][$index]);
+
+					if (isset($params['ids'])) {
+						$ids = explode(',', $params['ids']);
+
+						foreach($ids as $id){
+							$id = (int) $id;
+							if ($id > 0) $attachment_ids[] = $id;
+						}
+					}
+				}
+			}
+		}
+
+		// Make sure the ids only exist once
+		$attachment_ids = array_unique($attachment_ids);
 
 		// Go through all our attachments IDs and generate credits
 		foreach ($attachment_ids as $id) {
