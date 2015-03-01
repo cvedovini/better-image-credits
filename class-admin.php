@@ -45,8 +45,14 @@ class BetterImageCreditsAdmin {
 		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_OVERLAY;?>"
 			<?php checked($this->plugin->display_option(IMAGE_CREDIT_OVERLAY)); ?>><?php
 			_e('Overlay on images (results may vary depending on your theme)', 'better-image-credits'); ?></label></p>
+		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_INCLUDE_HEADER;?>"
+			<?php checked($this->plugin->display_option(IMAGE_CREDIT_INCLUDE_HEADER)); ?>><?php
+			_e('Include credits for header image (support for header image depends on you theme).', 'better-image-credits'); ?></label></p>
+		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_INCLUDE_BACKGROUND;?>"
+			<?php checked($this->plugin->display_option(IMAGE_CREDIT_INCLUDE_BACKGROUND)); ?>><?php
+			_e('Include credits for background image (support for background image depends on you theme).', 'better-image-credits'); ?></label></p>
 		<p><em><?php _e('Choose how you want to display the image credits', 'better-image-credits'); ?></em></p>
-	<?php }
+		<?php }
 
 	function add_settings_field_template() { ?>
 		<p><input type="text" name="better-image-credits_template" id="better-image-credits_template" class="large-text code"

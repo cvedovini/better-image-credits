@@ -4,7 +4,7 @@ Contributors: cvedovini
 Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 Tags: image, media, credits
 Requires at least: 3.0
-Tested up to: 4.1
+Tested up to: 4.1.1
 Stable tag: 1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,6 +21,7 @@ and `after`).
  `before` and `after`).
 - Let the plugin automatically display the credits for you, before or after the
 content or overlaid above each image.
+- Use the widget to display the credits in the footer or the sidebars.
 
 See the settings page to choose how you display the credits, including the HTML
 used to build them.
@@ -42,6 +43,10 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 
 == Changelog ==
+
+= Version 1.4 =
+- Added support for custom header and background images.
+- Added a widget to display the credits in footer or sidebars.
 
 = Version 1.3 =
 - Improved the support for the overlay display option
