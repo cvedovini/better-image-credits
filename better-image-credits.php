@@ -3,7 +3,7 @@
 Plugin Name: Better Image Credits
 Plugin URI: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
-Version: 1.4
+Version: 1.5RC1
 Author: Claude Vedovini
 Author URI: http://vedovini.net/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 License: GPLv3
@@ -188,10 +188,12 @@ class BetterImageCreditsPlugin {
 			$source = esc_attr(get_post_meta($id, '_wp_attachment_source_name', true));
 			$link = esc_url(get_post_meta($id, '_wp_attachment_source_url', true));
 			$license = esc_attr(get_post_meta($id, '_wp_attachment_license', true));
+			$license_link = esc_attr(get_post_meta($id, '_wp_attachment_license_url', true));
 
 			if (!empty($source)) {
-				$credits[$id] = str_replace(array('[title]', '[source]', '[link]', '[license]'),
-						array($title, $source, $link, $license),
+				$credits[$id] = str_replace(
+						array('[title]', '[source]', '[link]', '[license]', '[license_link]'),
+						array($title, $source, $link, $license, $license_link),
 						IMAGE_CREDITS_TEMPLATE);
 			}
 		}

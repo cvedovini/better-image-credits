@@ -44,6 +44,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 == Changelog ==
 
+= Version 1.5 =
+- Added support for a link to the license.
+
 = Version 1.4 =
 - Added support for custom header and background images.
 - Added a widget to display the credits in footer or sidebars.
