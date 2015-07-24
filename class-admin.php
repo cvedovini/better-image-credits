@@ -190,51 +190,23 @@ class BetterImageCreditsAdmin {
 
 	function save_fields($post, $attachment) {
 		if (isset($attachment['credits_source'])) {
-			$credits_source = get_post_meta($post['ID'], '_wp_attachment_source_name', true);
-
-			if ($credits_source != esc_attr($attachment['credits_source'])) {
-				if (empty($attachment['credits_source'])) {
-					delete_post_meta($post['ID'], '_wp_attachment_source_name');
-				} else {
-					update_post_meta($post['ID'], '_wp_attachment_source_name', esc_attr($attachment['credits_source']));
-				}
-			}
+			update_post_meta($post['ID'], '_wp_attachment_source_name',
+					esc_attr($attachment['credits_source']));
 		}
 
 		if (isset($attachment['credits_link'])) {
-			$credits_link = get_post_meta($post['ID'], '_wp_attachment_source_url', true);
-
-			if ($credits_link != esc_url($attachment['credits_link'])) {
-				if (empty($attachment['credits_link'])) {
-					delete_post_meta($post['ID'], '_wp_attachment_source_url');
-				} else {
-					update_post_meta($post['ID'], '_wp_attachment_source_url', esc_url($attachment['credits_link']));
-				}
-			}
+			update_post_meta($post['ID'], '_wp_attachment_source_url',
+					esc_url($attachment['credits_link']));
 		}
 
 		if (isset($attachment['license'])) {
-			$license = get_post_meta($post['ID'], '_wp_attachment_license', true);
-
-			if ($license != esc_attr($attachment['license'])) {
-				if (empty($attachment['license'])) {
-					delete_post_meta($post['ID'], '_wp_attachment_license');
-				} else {
-					update_post_meta($post['ID'], '_wp_attachment_license', esc_attr($attachment['license']));
-				}
-			}
+			update_post_meta($post['ID'], '_wp_attachment_license',
+					esc_attr($attachment['license']));
 		}
 
 		if (isset($attachment['license_link'])) {
-			$license = get_post_meta($post['ID'], '_wp_attachment_license_url', true);
-
-			if ($license != esc_attr($attachment['license_link'])) {
-				if (empty($attachment['license_link'])) {
-					delete_post_meta($post['ID'], '_wp_attachment_license_url');
-				} else {
-					update_post_meta($post['ID'], '_wp_attachment_license_url', esc_attr($attachment['license_link']));
-				}
-			}
+			update_post_meta($post['ID'], '_wp_attachment_license_url',
+					esc_attr($attachment['license_link']));
 		}
 
 		return $post;
