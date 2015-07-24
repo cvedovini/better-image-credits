@@ -4,8 +4,8 @@ Contributors: cvedovini
 Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 Tags: image, media, credits
 Requires at least: 3.0
-Tested up to: 4.0
-Stable tag: 1.2
+Tested up to: 4.2.3
+Stable tag: 1.5.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -21,6 +21,7 @@ and `after`).
  `before` and `after`).
 - Let the plugin automatically display the credits for you, before or after the
 content or overlaid above each image.
+- Use the widget to display the credits in the footer or the sidebars.
 
 See the settings page to choose how you display the credits, including the HTML
 used to build them.
@@ -43,11 +44,23 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 == Changelog ==
 
+= Version 1.5.1 =
+- Fixed wrong hook used to initialized the admin part of the plugin causing the
+cusom fields not to show up or not to save when adding an image from the post editor.
+
+= Version 1.5 =
+- Added support for a link to the license.
+
+= Version 1.4 =
+- Added support for custom header and background images.
+- Added a widget to display the credits in footer or sidebars.
+
 = Version 1.3 =
 - Improved the support for the overlay display option
 - Added templating for the individual credits
 - Added a license field
 - Simplified and moved around some code
+- Added support for image galleries
 
 = Version 1.2 =
 - Added Italian and Serbian translations
@@ -71,4 +84,6 @@ Dutch translations.
 - Borisa Djuraskovic from [Web Hosting Hub](http://www.webhostinghub.com/): Contributed
 the Serbian translations.
 - [Luca Palli](http://lpal.li/): Contributed the Italian translations.
+- [joerns](https://wordpress.org/support/profile/joerns): Contributed the code
+to support the galleries.
 
