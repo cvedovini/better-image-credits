@@ -44,6 +44,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 == Changelog ==
 
+= Version 1.5.2 =
+- More fix related to the admin hook issue.
+
 = Version 1.5.1 =
 - Fixed wrong hook used to initialized the admin part of the plugin causing the
 cusom fields not to show up or not to save when adding an image from the post editor.
