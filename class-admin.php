@@ -9,8 +9,6 @@ class BetterImageCreditsAdmin {
 		// Manage additional media fields
 		add_filter('manage_media_columns', array(&$this, 'manage_media_columns'));
 		add_action('manage_media_custom_column', array(&$this, 'manage_media_custom_column'), 10, 2);
-		add_filter('attachment_fields_to_edit', array($this, 'add_fields' ), 10, 2);
-		add_filter('attachment_fields_to_save', array($this, 'save_fields' ), 10 , 2);
 	}
 
 	function add_settings() {
@@ -154,63 +152,6 @@ class BetterImageCreditsAdmin {
 				}
 			}
 		}
-	}
-
-	function add_fields($form_fields, $post) {
-		$form_fields['credits_source'] = array(
-				'label' => __( 'Credits', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_name', true),
-				'helps' => __( 'Source name of the image.', 'better-image-credits' )
-		);
-
-		$form_fields['credits_link'] = array(
-				'label' => __( 'Link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_url', true),
-				'helps' => __( 'URL where the original image was found.', 'better-image-credits' )
-		);
-
-		$form_fields['license'] = array(
-				'label' => __( 'License', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license', true),
-				'helps' => __( 'License for this image.', 'better-image-credits' )
-		);
-
-		$form_fields['license_link'] = array(
-				'label' => __( 'License link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license_url', true),
-				'helps' => __( 'Link to the license.', 'better-image-credits' )
-		);
-
-		return $form_fields;
-	}
-
-	function save_fields($post, $attachment) {
-		if (isset($attachment['credits_source'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_name',
-					esc_attr($attachment['credits_source']));
-		}
-
-		if (isset($attachment['credits_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_url',
-					esc_url($attachment['credits_link']));
-		}
-
-		if (isset($attachment['license'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license',
-					esc_attr($attachment['license']));
-		}
-
-		if (isset($attachment['license_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license_url',
-					esc_attr($attachment['license_link']));
-		}
-
-		return $post;
-
 	}
 
 }
