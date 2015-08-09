@@ -79,7 +79,7 @@ class BetterImageCreditsAdmin {
 	function options_page() { ?>
 <div class="wrap">
 	<?php screen_icon(); ?>
-	<h2><?php _e('Image Credits Options', 'better-image-credits'); ?></h2>
+	<h1><?php _e('Image Credits Options', 'better-image-credits'); ?></h1>
 	<div id="main-container" class="postbox-container metabox-holder" style="width:75%;"><div style="margin:0 8px;">
 		<div class="postbox">
 			<h3 style="cursor:default;"><span><?php _e('Options', 'better-image-credits'); ?></span></h3>

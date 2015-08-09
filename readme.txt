@@ -4,8 +4,8 @@ Contributors: cvedovini
 Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
 Tags: image, media, credits
 Requires at least: 3.0
-Tested up to: 4.2.3
-Stable tag: 1.5.2
+Tested up to: 4.3
+Stable tag: 1.5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,6 +43,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 
 == Changelog ==
+
+= version 1.5.3 =
+- Changes for WordPress 4.3
 
 = Version 1.5.2 =
 - More fix related to the admin hook issue.
