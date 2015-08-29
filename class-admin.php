@@ -108,7 +108,7 @@ class BetterImageCreditsAdmin {
 					</form>
 				</div>
 				<p><?php _e('We also need volunteers to translate that plugin into more languages.', 'better-image-credits'); ?>
-					<?php _e('If you wish to help then contact <a href="https://twitter.com/cvedovini">@cvedovini</a> on Twitter or use that <a href="http://vedovini.net/contact/">contact form</a>.', 'better-image-credits'); ?></p>
+					<?php _e('If you wish to help then contact <a href="https://twitter.com/cvedovini">@cvedovini</a> on Twitter or use that <a href="http://vdvn.me/contact/">contact form</a>.', 'better-image-credits'); ?></p>
 			</div> <!-- .inside -->
 		</div> <!-- .postbox -->
 		<div>

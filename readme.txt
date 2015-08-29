@@ -1,11 +1,11 @@
 === Better Image Credits ===
 Author: Claude Vedovini
 Contributors: cvedovini
-Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
+Donate link: http://vdvn.me/pga
 Tags: image, media, credits
 Requires at least: 3.0
 Tested up to: 4.3
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 

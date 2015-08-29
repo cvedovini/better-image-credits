@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Better Image Credits
-Plugin URI: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
+Plugin URI: http://vdvn.me/pga
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
 Version: 1.5.4
 Author: Claude Vedovini
-Author URI: http://vedovini.net/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
+Author URI: http://vdvn.me/
 License: GPLv3
 Text Domain: better-image-credits
 
