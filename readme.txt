@@ -1,11 +1,11 @@
 === Better Image Credits ===
 Author: Claude Vedovini
 Contributors: cvedovini
-Donate link: http://vdvn.me/pga
+Donate link: http://paypal.me/vdvn
 Tags: image, media, credits
 Requires at least: 3.0
 Tested up to: 4.3
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,8 +15,8 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 This plugin adds credits, link and license fields to media uploads and offer several
 options to display image credits on your posts and pages. You can either:
 
-- Use the [image-credit] shortcode. Optional attributes are `sep`, `before`,
-`after` and `template` (use curly brackets instead of square brackets for placeholders).
+- Use the [image-credit] shortcode. Optional attributes are `sep`, `before`, `after`
+and `template` (use curly brackets instead of square brackets for placeholders).
 - Use the `the_image_credits()` template tag. Optional parameters are `sep`,
  `before`, `after` and `template`.
 - Let the plugin automatically display the credits for you, before or after the
@@ -43,6 +43,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 
 == Changelog ==
+
+= version 1.5.5 =
+- Updating pot file and French translations
 
 = version 1.5.4 =
 - Changes for WordPress 4.3
