@@ -44,6 +44,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 == Changelog ==
 
+= Version 1.6 =
+- Updated all translations
+
 = version 1.5.5 =
 - Updating pot file and French translations
 
