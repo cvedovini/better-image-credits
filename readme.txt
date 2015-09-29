@@ -1,11 +1,11 @@
 === Better Image Credits ===
 Author: Claude Vedovini
 Contributors: cvedovini
-Donate link: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
+Donate link: http://paypal.me/vdvn
 Tags: image, media, credits
 Requires at least: 3.0
-Tested up to: 4.2.3
-Stable tag: 1.5.1
+Tested up to: 4.3
+Stable tag: 1.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,10 +15,10 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 This plugin adds credits, link and license fields to media uploads and offer several
 options to display image credits on your posts and pages. You can either:
 
-- Use the [image-credit] shortcode (optional attributes are `sep`, `before`
-and `after`).
-- Use the `the_image_credits()` template tag (optional parameters are `sep`,
- `before` and `after`).
+- Use the [image-credit] shortcode. Optional attributes are `sep`, `before`, `after`
+and `template` (use curly brackets instead of square brackets for placeholders).
+- Use the `the_image_credits()` template tag. Optional parameters are `sep`,
+ `before`, `after` and `template`.
 - Let the plugin automatically display the credits for you, before or after the
 content or overlaid above each image.
 - Use the widget to display the credits in the footer or the sidebars.
@@ -43,6 +43,20 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 
 == Changelog ==
+
+= Version 1.6 =
+- Updated all translations
+
+= version 1.5.5 =
+- Updating pot file and French translations
+
+= version 1.5.4 =
+- Changes for WordPress 4.3
+- Widget can now display credits on archive pages too
+- Added `template` attribute to shortcode
+
+= Version 1.5.2 =
+- More fix related to the admin hook issue.
 
 = Version 1.5.1 =
 - Fixed wrong hook used to initialized the admin part of the plugin causing the

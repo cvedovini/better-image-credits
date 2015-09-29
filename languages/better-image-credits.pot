@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Better Image Credits package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Better Image Credits 1.3RC2\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/better-image-"
+"Project-Id-Version: Better Image Credits 1.5.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/better-image-"
 "credits\n"
-"POT-Creation-Date: 2015-02-20 16:01:44+00:00\n"
+"POT-Creation-Date: 2015-09-04 05:14:56+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,123 +13,151 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: better-image-credits.php:31 class-admin.php:18
+#: better-image-credits.php:30 class-admin.php:16 class-credits-widget.php:6
 msgid "Image Credits"
 msgstr ""
 
-#: class-admin.php:18 class-admin.php:78
+#: better-image-credits.php:277 class-admin.php:124
+msgid "Credits"
+msgstr ""
+
+#: better-image-credits.php:280
+msgid "Source name of the image."
+msgstr ""
+
+#: better-image-credits.php:284
+msgid "Link"
+msgstr ""
+
+#: better-image-credits.php:287
+msgid "URL where the original image was found."
+msgstr ""
+
+#: better-image-credits.php:291 class-admin.php:125
+msgid "License"
+msgstr ""
+
+#: better-image-credits.php:294
+msgid "License for this image."
+msgstr ""
+
+#: better-image-credits.php:298
+msgid "License link"
+msgstr ""
+
+#: better-image-credits.php:301
+msgid "Link to the license."
+msgstr ""
+
+#: class-admin.php:16 class-admin.php:82
 msgid "Image Credits Options"
 msgstr ""
 
-#: class-admin.php:20
+#: class-admin.php:18
 msgid "Display Credits"
 msgstr ""
 
-#: class-admin.php:21
+#: class-admin.php:19
 msgid "Template"
 msgstr ""
 
-#: class-admin.php:22
+#: class-admin.php:20
 msgid "Separator"
 msgstr ""
 
-#: class-admin.php:23
+#: class-admin.php:21
 msgid "Before"
 msgstr ""
 
-#: class-admin.php:24
+#: class-admin.php:22
 msgid "After"
 msgstr ""
 
-#: class-admin.php:34
+#: class-admin.php:32
 msgid "Settings"
 msgstr ""
 
-#: class-admin.php:41
+#: class-admin.php:39
 msgid "Before the content"
 msgstr ""
 
-#: class-admin.php:44
+#: class-admin.php:42
 msgid "After the content"
 msgstr ""
 
-#: class-admin.php:47
+#: class-admin.php:45
 msgid "Overlay on images (results may vary depending on your theme)"
 msgstr ""
 
 #: class-admin.php:48
+msgid ""
+"Include credits for header image (support for header image depends on you "
+"theme)."
+msgstr ""
+
+#: class-admin.php:51
+msgid ""
+"Include credits for background image (support for background image depends "
+"on you theme)."
+msgstr ""
+
+#: class-admin.php:52
 msgid "Choose how you want to display the image credits"
 msgstr ""
 
-#: class-admin.php:54
+#: class-admin.php:58
 msgid ""
-"HTML to output each individual credit line. Use [title], [source], [link] or "
-"[license] as placeholders."
+"HTML to output each individual credit line. Use [title], [source], [link], "
+"[license] or [license_link] as placeholders."
 msgstr ""
 
-#: class-admin.php:60
+#: class-admin.php:64
 msgid ""
 "HTML to separate the credits (enter leading and trailing spaces using HTML "
 "entities)."
 msgstr ""
 
-#: class-admin.php:66
+#: class-admin.php:70
 msgid ""
 "HTML to output before the credits (enter leading and trailing spaces using "
 "HTML entities)."
 msgstr ""
 
-#: class-admin.php:72
+#: class-admin.php:76
 msgid ""
 "HTML to output after the credits (enter leading and trailing spaces using "
 "HTML entities)."
 msgstr ""
 
-#: class-admin.php:81
+#: class-admin.php:85
 msgid "Options"
 msgstr ""
 
-#: class-admin.php:94
+#: class-admin.php:98
 msgid "Do you like this Plugin?"
 msgstr ""
 
-#: class-admin.php:96
+#: class-admin.php:100
 msgid "Please consider a donation."
 msgstr ""
 
-#: class-admin.php:106
+#: class-admin.php:110
 msgid "We also need volunteers to translate that plugin into more languages."
 msgstr ""
 
-#: class-admin.php:107
+#: class-admin.php:111
 msgid ""
 "If you wish to help then contact <a href=\"https://twitter.com/cvedovini"
-"\">@cvedovini</a> on Twitter or use that <a href=\"http://vedovini.net/"
-"contact/\">contact form</a>."
+"\">@cvedovini</a> on Twitter or use that <a href=\"http://vdvn.me/contact/"
+"\">contact form</a>."
 msgstr ""
 
-#: class-admin.php:120 class-admin.php:141
-msgid "Credits"
+#: class-credits-widget.php:7
+msgid "A widget displaying the image credits"
 msgstr ""
 
-#: class-admin.php:144
-msgid "Source name of the image."
-msgstr ""
-
-#: class-admin.php:148
-msgid "Link"
-msgstr ""
-
-#: class-admin.php:151
-msgid "URL where the original image was found."
-msgstr ""
-
-#: class-admin.php:155
-msgid "License"
-msgstr ""
-
-#: class-admin.php:158
-msgid "License for this image."
+#: class-credits-widget.php:41
+msgid "Title:"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -137,9 +165,7 @@ msgid "Better Image Credits"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid ""
-"http://vedovini.net/plugins/?"
-"utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits"
+msgid "http://vdvn.me/pga"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -153,7 +179,5 @@ msgid "Claude Vedovini"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid ""
-"http://vedovini.net/?"
-"utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits"
+msgid "http://vdvn.me/"
 msgstr ""

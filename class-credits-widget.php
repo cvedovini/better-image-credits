@@ -13,11 +13,20 @@ class BetterImageCreditsWidget extends WP_Widget {
 				'title' => ''
 			));
 
-		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
+		if (have_posts()) {
+			rewind_posts();
+			$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
 
-		echo $before_widget;
-		if ($title) echo $before_title . $title . $after_title;
-		the_image_credits();
+			echo $before_widget;
+			if ($title) echo $before_title . $title . $after_title;
+
+			echo IMAGE_CREDITS_BEFORE;
+			while (have_posts()) {
+				the_post();
+				the_image_credits($sep=IMAGE_CREDITS_SEP, $before='', $after='');
+			}
+			echo IMAGE_CREDITS_AFTER;
+		}
 		echo $after_widget;
 	}
 

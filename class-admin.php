@@ -9,8 +9,6 @@ class BetterImageCreditsAdmin {
 		// Manage additional media fields
 		add_filter('manage_media_columns', array(&$this, 'manage_media_columns'));
 		add_action('manage_media_custom_column', array(&$this, 'manage_media_custom_column'), 10, 2);
-		add_filter('attachment_fields_to_edit', array($this, 'add_fields' ), 10, 2);
-		add_filter('attachment_fields_to_save', array($this, 'save_fields' ), 10 , 2);
 	}
 
 	function add_settings() {
@@ -81,7 +79,7 @@ class BetterImageCreditsAdmin {
 	function options_page() { ?>
 <div class="wrap">
 	<?php screen_icon(); ?>
-	<h2><?php _e('Image Credits Options', 'better-image-credits'); ?></h2>
+	<h1><?php _e('Image Credits Options', 'better-image-credits'); ?></h1>
 	<div id="main-container" class="postbox-container metabox-holder" style="width:75%;"><div style="margin:0 8px;">
 		<div class="postbox">
 			<h3 style="cursor:default;"><span><?php _e('Options', 'better-image-credits'); ?></span></h3>
@@ -110,7 +108,7 @@ class BetterImageCreditsAdmin {
 					</form>
 				</div>
 				<p><?php _e('We also need volunteers to translate that plugin into more languages.', 'better-image-credits'); ?>
-					<?php _e('If you wish to help then contact <a href="https://twitter.com/cvedovini">@cvedovini</a> on Twitter or use that <a href="http://vedovini.net/contact/">contact form</a>.', 'better-image-credits'); ?></p>
+					<?php _e('If you wish to help then contact <a href="https://twitter.com/cvedovini">@cvedovini</a> on Twitter or use that <a href="http://vdvn.me/contact/">contact form</a>.', 'better-image-credits'); ?></p>
 			</div> <!-- .inside -->
 		</div> <!-- .postbox -->
 		<div>
@@ -154,63 +152,6 @@ class BetterImageCreditsAdmin {
 				}
 			}
 		}
-	}
-
-	function add_fields($form_fields, $post) {
-		$form_fields['credits_source'] = array(
-				'label' => __( 'Credits', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_name', true),
-				'helps' => __( 'Source name of the image.', 'better-image-credits' )
-		);
-
-		$form_fields['credits_link'] = array(
-				'label' => __( 'Link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_url', true),
-				'helps' => __( 'URL where the original image was found.', 'better-image-credits' )
-		);
-
-		$form_fields['license'] = array(
-				'label' => __( 'License', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license', true),
-				'helps' => __( 'License for this image.', 'better-image-credits' )
-		);
-
-		$form_fields['license_link'] = array(
-				'label' => __( 'License link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license_url', true),
-				'helps' => __( 'Link to the license.', 'better-image-credits' )
-		);
-
-		return $form_fields;
-	}
-
-	function save_fields($post, $attachment) {
-		if (isset($attachment['credits_source'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_name',
-					esc_attr($attachment['credits_source']));
-		}
-
-		if (isset($attachment['credits_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_url',
-					esc_url($attachment['credits_link']));
-		}
-
-		if (isset($attachment['license'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license',
-					esc_attr($attachment['license']));
-		}
-
-		if (isset($attachment['license_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license_url',
-					esc_attr($attachment['license_link']));
-		}
-
-		return $post;
-
 	}
 
 }
