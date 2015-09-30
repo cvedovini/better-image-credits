@@ -28,7 +28,7 @@ class BetterImageCreditsAdmin {
 	}
 
 	function add_settings_link($links) {
-		$url = site_url('/wp-admin/options-general.php?page=image-credits');
+		$url = admin_url('options-general.php?page=image-credits');
 		$links[] = '<a href="' . $url . '">' . __('Settings') . '</a>';
 		return $links;
 	}
