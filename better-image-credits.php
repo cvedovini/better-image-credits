@@ -25,10 +25,22 @@ Text Domain: better-image-credits
 # See the GNU lesser General Public License for more details.
 */
 
-define('IMAGE_CREDITS_TEMPLATE', get_option('better-image-credits_template', '<a href="[link]" target="_blank">[source]</a>'));
-define('IMAGE_CREDITS_SEP', get_option('better-image-credits_sep', ',&#32;'));
-define('IMAGE_CREDITS_BEFORE', get_option('better-image-credits_before', '<p class="image-credits">' . __('Image Credits', 'better-image-credits') . ':&#32;'));
-define('IMAGE_CREDITS_AFTER', get_option('better-image-credits_after', '.</p>'));
+
+function bic_get_option($option, $default) {
+	$options = get_option('better-image-credits-options');
+
+	if ($options && is_array($options)) {
+		return (isset($options[$option])) ? $options[$option] : $default;
+	}
+
+	return get_option('better-image-credits_' . $option, $default);
+}
+
+
+define('IMAGE_CREDITS_TEMPLATE', bic_get_option('template', '<a href="[link]" target="_blank">[source]</a>'));
+define('IMAGE_CREDITS_SEP', bic_get_option('sep', ',&#32;'));
+define('IMAGE_CREDITS_BEFORE', bic_get_option('before', '<p class="image-credits">' . __('Image Credits', 'better-image-credits') . ':&#32;'));
+define('IMAGE_CREDITS_AFTER', bic_get_option('after', '.</p>'));
 
 define('IMAGE_CREDIT_BEFORE_CONTENT', 'before');
 define('IMAGE_CREDIT_AFTER_CONTENT', 'after');
@@ -111,7 +123,7 @@ class BetterImageCreditsPlugin {
 	}
 
 	function display_option($option) {
-		$options = get_option('better-image-credits_display', array());
+		$options = bic_get_option('display', array());
 		if (!is_array($options)) $options = array($options);
 		return in_array($option, $options);
 	}

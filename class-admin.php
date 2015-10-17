@@ -83,16 +83,17 @@ class BetterImageCreditsAdmin {
 	function admin_menu() {
 		add_submenu_page('options-general.php', __('Image Credits Options', 'better-image-credits'), __('Image Credits', 'better-image-credits'), 'manage_options', 'image-credits', array(&$this, 'options_page'));
 		add_settings_section('default', '', '', 'image-credits');
-		$this->add_settings_field('better-image-credits_display', __('Display Credits', 'better-image-credits'), 'add_settings_field_display');
-		$this->add_settings_field('better-image-credits_template', __('Template', 'better-image-credits'), 'add_settings_field_template');
-		$this->add_settings_field('better-image-credits_sep', __('Separator', 'better-image-credits'), 'add_settings_field_sep');
-		$this->add_settings_field('better-image-credits_before', __('Before', 'better-image-credits'), 'add_settings_field_before');
-		$this->add_settings_field('better-image-credits_after', __('After', 'better-image-credits'), 'add_settings_field_after');
+		register_setting('image-credits', 'better-image-credits-options');
+		$this->add_settings_field('display', __('Display Credits', 'better-image-credits'));
+		$this->add_settings_field('template', __('Template', 'better-image-credits'));
+		$this->add_settings_field('sep', __('Separator', 'better-image-credits'));
+		$this->add_settings_field('before', __('Before', 'better-image-credits'));
+		$this->add_settings_field('after', __('After', 'better-image-credits'));
 	}
 
-	function add_settings_field($id, $title, $callback) {
-		register_setting('image-credits', $id);
-		add_settings_field($id, $title, array(&$this, $callback), 'image-credits');
+	function add_settings_field($id, $title) {
+		add_settings_field($id, $title, array(&$this, 'field_' . $id), 'image-credits',
+				'default', array('field_name' => "better-image-credits-options[$id]"));
 	}
 
 	function add_settings_link($links) {
@@ -101,56 +102,59 @@ class BetterImageCreditsAdmin {
 		return $links;
 	}
 
-	function add_settings_field_display() { ?>
-		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_BEFORE_CONTENT;?>"
+	function field_display($args) {
+		extract($args); ?>
+		<p><label><input type="checkbox" name="<?php echo $field_name; ?>[]" value="<?php echo IMAGE_CREDIT_BEFORE_CONTENT;?>"
 			<?php checked($this->plugin->display_option(IMAGE_CREDIT_BEFORE_CONTENT)); ?>><?php
 			_e('Before the content', 'better-image-credits'); ?></label></p>
-		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_AFTER_CONTENT;?>"
+		<p><label><input type="checkbox" name="<?php echo $field_name; ?>[]" value="<?php echo IMAGE_CREDIT_AFTER_CONTENT;?>"
 			<?php checked($this->plugin->display_option(IMAGE_CREDIT_AFTER_CONTENT)); ?>><?php
 			_e('After the content', 'better-image-credits'); ?></label></p>
-		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_OVERLAY;?>"
+		<p><label><input type="checkbox" name="<?php echo $field_name; ?>[]" value="<?php echo IMAGE_CREDIT_OVERLAY;?>"
 			<?php checked($this->plugin->display_option(IMAGE_CREDIT_OVERLAY)); ?>><?php
 			_e('Overlay on images (results may vary depending on your theme)', 'better-image-credits'); ?></label></p>
-		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_INCLUDE_HEADER;?>"
+		<p><label><input type="checkbox" name="<?php echo $field_name; ?>[]" value="<?php echo IMAGE_CREDIT_INCLUDE_HEADER;?>"
 			<?php checked($this->plugin->display_option(IMAGE_CREDIT_INCLUDE_HEADER)); ?>><?php
 			_e('Include credits for header image (support for header image depends on you theme).', 'better-image-credits'); ?></label></p>
-		<p><label><input type="checkbox" name="better-image-credits_display[]" value="<?php echo IMAGE_CREDIT_INCLUDE_BACKGROUND;?>"
+		<p><label><input type="checkbox" name="<?php echo $field_name; ?>[]" value="<?php echo IMAGE_CREDIT_INCLUDE_BACKGROUND;?>"
 			<?php checked($this->plugin->display_option(IMAGE_CREDIT_INCLUDE_BACKGROUND)); ?>><?php
 			_e('Include credits for background image (support for background image depends on you theme).', 'better-image-credits'); ?></label></p>
 		<p><em><?php _e('Choose how you want to display the image credits', 'better-image-credits'); ?></em></p>
 		<?php }
 
-	function add_settings_field_template() { ?>
-		<p><input type="text" name="better-image-credits_template" id="better-image-credits_template" class="large-text code"
+	function field_template($args) {
+		extract($args); ?>
+		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
 			value="<?php echo htmlspecialchars(IMAGE_CREDITS_TEMPLATE); ?>" /></p>
 		<p><em><?php _e('HTML to output each individual credit line. Use [title], [source], [link], [license] or [license_link] as placeholders.', 'better-image-credits'); ?></em></p><?php
 	}
 
-	function add_settings_field_sep() { ?>
-		<p><input type="text" name="better-image-credits_sep" id="better-image-credits_sep" class="large-text code"
+	function field_sep($args) {
+		extract($args); ?>
+		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
 			value="<?php echo htmlspecialchars(IMAGE_CREDITS_SEP); ?>" /></p>
 		<p><em><?php _e('HTML to separate the credits (enter leading and trailing spaces using HTML entities).', 'better-image-credits'); ?></em></p><?php
 	}
 
-	function add_settings_field_before() { ?>
-		<p><input type="text" name="better-image-credits_before" id="better-image-credits_before" class="large-text code"
+	function field_before($args) {
+		extract($args); ?>
+		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
 			value="<?php echo htmlspecialchars(IMAGE_CREDITS_BEFORE); ?>" /></p>
 		<p><em><?php _e('HTML to output before the credits (enter leading and trailing spaces using HTML entities).', 'better-image-credits'); ?></em></p><?php
 	}
 
-	function add_settings_field_after() { ?>
-		<p><input type="text" name="better-image-credits_after" id="better-image-credits_after" class="large-text code"
+	function field_after($args) {
+		extract($args); ?>
+		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
 			value="<?php echo htmlspecialchars(IMAGE_CREDITS_AFTER); ?>" /></p>
 		<p><em><?php _e('HTML to output after the credits (enter leading and trailing spaces using HTML entities).', 'better-image-credits'); ?></em></p><?php
 	}
 
 	function options_page() { ?>
 <div class="wrap">
-	<?php screen_icon(); ?>
 	<h1><?php _e('Image Credits Options', 'better-image-credits'); ?></h1>
 	<div id="main-container" class="postbox-container metabox-holder" style="width:75%;"><div style="margin:0 8px;">
 		<div class="postbox">
-			<h3 style="cursor:default;"><span><?php _e('Options', 'better-image-credits'); ?></span></h3>
 			<div class="inside">
 				<form method="POST" action="options.php"><?php
 				settings_fields('image-credits');
