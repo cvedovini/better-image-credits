@@ -13,12 +13,27 @@ class BetterImageCreditsWidget extends WP_Widget {
 				'title' => ''
 			));
 
-		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
+		if (have_posts()) {
+			rewind_posts();
+			while (have_posts()) {
+				the_post();
+				$credits[] = get_the_image_credits($sep=IMAGE_CREDITS_SEP, $before='', $after='');
+			}
 
-		echo $before_widget;
-		if ($title) echo $before_title . $title . $after_title;
-		the_image_credits();
-		echo $after_widget;
+			$credits = implode('', $credits);
+
+			if (!empty($credits)) {
+				$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
+
+				echo $before_widget;
+				if ($title) echo $before_title . $title . $after_title;
+
+				echo IMAGE_CREDITS_BEFORE;
+				echo $credits;
+				echo IMAGE_CREDITS_AFTER;
+				echo $after_widget;
+			}
+		}
 	}
 
 	public function form($instance) {
