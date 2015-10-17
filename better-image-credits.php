@@ -3,7 +3,7 @@
 Plugin Name: Better Image Credits
 Plugin URI: http://vdvn.me/pga
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
-Version: 1.6
+Version: 1.7
 Author: Claude Vedovini
 Author URI: http://vdvn.me/
 License: GPLv3
@@ -53,8 +53,11 @@ class BetterImageCreditsPlugin {
 	function __construct() {
 		add_action('init', array($this, 'init'));
 		add_action('widgets_init', array(&$this, 'widgets_init'));
-		add_action('admin_menu', array(&$this, 'admin_menu'));
-		add_action('admin_init', array(&$this, 'admin_init'));
+
+		if (is_admin()) {
+			require_once 'class-admin.php';
+			$this->admin = new BetterImageCreditsAdmin($this);
+		}
 	}
 
 	function init() {
@@ -85,16 +88,6 @@ class BetterImageCreditsPlugin {
 	function widgets_init() {
 		include 'class-credits-widget.php';
 		register_widget('BetterImageCreditsWidget');
-	}
-
-	function admin_menu() {
-		require_once 'class-admin.php';
-		$this->admin = new BetterImageCreditsAdmin($this);
-	}
-
-	function admin_init() {
-		add_filter('attachment_fields_to_edit', array($this, 'add_fields' ), 10, 2);
-		add_filter('attachment_fields_to_save', array($this, 'save_fields' ), 10 , 2);
 	}
 
 	function smarter_load_textdomain($mofile, $domain) {
@@ -270,63 +263,6 @@ class BetterImageCreditsPlugin {
 	function filter_attachment_image_attributes($attr, $attachment) {
 		$attr['class'] = $attr['class'] . ' wp-image-' . $attachment->ID;
 		return $attr;
-	}
-
-	function add_fields($form_fields, $post) {
-		$form_fields['credits_source'] = array(
-				'label' => __( 'Credits', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_name', true),
-				'helps' => __( 'Source name of the image.', 'better-image-credits' )
-		);
-
-		$form_fields['credits_link'] = array(
-				'label' => __( 'Link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_url', true),
-				'helps' => __( 'URL where the original image was found.', 'better-image-credits' )
-		);
-
-		$form_fields['license'] = array(
-				'label' => __( 'License', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license', true),
-				'helps' => __( 'License for this image.', 'better-image-credits' )
-		);
-
-		$form_fields['license_link'] = array(
-				'label' => __( 'License link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license_url', true),
-				'helps' => __( 'Link to the license.', 'better-image-credits' )
-		);
-
-		return $form_fields;
-	}
-
-	function save_fields($post, $attachment) {
-		if (isset($attachment['credits_source'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_name',
-					esc_attr($attachment['credits_source']));
-		}
-
-		if (isset($attachment['credits_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_url',
-					esc_url($attachment['credits_link']));
-		}
-
-		if (isset($attachment['license'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license',
-					esc_attr($attachment['license']));
-		}
-
-		if (isset($attachment['license_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license_url',
-					esc_attr($attachment['license_link']));
-		}
-
-		return $post;
-
 	}
 
 }

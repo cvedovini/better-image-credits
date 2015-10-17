@@ -4,8 +4,8 @@ Contributors: cvedovini
 Donate link: http://paypal.me/vdvn
 Tags: image, media, credits
 Requires at least: 3.0
-Tested up to: 4.3
-Stable tag: 1.6
+Tested up to: 4.3.1
+Stable tag: 1.6.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,6 +43,15 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 
 == Changelog ==
+
+= Version 1.7 =
+- Added the possibility to set the credits in bulk in the media library. Open
+the media library, choose the list mode then in the "Bulk Actions" dropdown
+choose the "Set Credits" action. Select the images you want to update and press
+the "Apply" button.
+
+= Version 1.6.1 =
+- Totally masking the widget when there is no credit
 
 = Version 1.6 =
 - Updated all translations

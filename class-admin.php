@@ -4,15 +4,83 @@ class BetterImageCreditsAdmin {
 
 	function __construct($plugin) {
 		$this->plugin = $plugin;
-		$this->add_settings();
+		add_filter('plugin_action_links_better-image-credits/better-image-credits.php', array(&$this, 'add_settings_link'));
+		add_filter('attachment_fields_to_edit', array($this, 'add_fields' ), 10, 2);
+		add_filter('attachment_fields_to_save', array($this, 'save_fields' ), 10 , 2);
 
-		// Manage additional media fields
 		add_filter('manage_media_columns', array(&$this, 'manage_media_columns'));
 		add_action('manage_media_custom_column', array(&$this, 'manage_media_custom_column'), 10, 2);
+		add_action('admin_menu', array(&$this, 'admin_menu'));
+
+		add_action('admin_footer-upload.php', array(&$this, 'add_bulk_actions'));
+		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
+		add_action('admin_action_set_credits', array(&$this, 'set_credits'));
+		add_action('admin_action_-1', array(&$this, 'set_credits')); // Bottom dropdown (assumes top dropdown = default value)
 	}
 
-	function add_settings() {
-		add_filter('plugin_action_links_better-image-credits/better-image-credits.php', array(&$this, 'add_settings_link'));
+	function add_fields($form_fields, $post) {
+		$mime = get_post_mime_type($post->ID);
+
+		if (preg_match('|image/.+|', $mime)) {
+			$form_fields['credits_source'] = $this->get_field($post,
+					'credits_source', '_wp_attachment_source_name',
+					__('Credits', 'better-image-credits'),
+					__('Source name', 'better-image-credits'));
+
+			$form_fields['credits_link'] = $this->get_field($post,
+					'credits_link', '_wp_attachment_source_url',
+					__('Link', 'better-image-credits'),
+					__('Source URL', 'better-image-credits'));
+
+			$form_fields['license'] = $this->get_field($post,
+					'license', '_wp_attachment_license',
+					__('License', 'better-image-credits'),
+					__('License type', 'better-image-credits'));
+
+			$form_fields['license_link'] = $this->get_field($post,
+					'license_link', '_wp_attachment_license_url',
+					__('License link', 'better-image-credits'),
+					__('License URL', 'better-image-credits'));
+		}
+
+		return $form_fields;
+	}
+
+	function get_field($post, $fid, $value, $label, $helps) {
+		$value = get_post_meta($post->ID, $value, true);
+		return array(
+				'label' => $label,
+				'input' => 'html',
+				'html'  => "<input type='text' class='text' placeholder='$helps' name='attachments[{$post->ID}][$fid]' value='$value'>"
+			);
+	}
+
+	function save_fields($post, $attachment) {
+		if (isset($attachment['credits_source'])) {
+			update_post_meta($post['ID'], '_wp_attachment_source_name',
+					esc_attr($attachment['credits_source']));
+		}
+
+		if (isset($attachment['credits_link'])) {
+			update_post_meta($post['ID'], '_wp_attachment_source_url',
+					esc_url($attachment['credits_link']));
+		}
+
+		if (isset($attachment['license'])) {
+			update_post_meta($post['ID'], '_wp_attachment_license',
+					esc_attr($attachment['license']));
+		}
+
+		if (isset($attachment['license_link'])) {
+			update_post_meta($post['ID'], '_wp_attachment_license_url',
+					esc_url($attachment['license_link']));
+		}
+
+		return $post;
+
+	}
+
+	function admin_menu() {
 		add_submenu_page('options-general.php', __('Image Credits Options', 'better-image-credits'), __('Image Credits', 'better-image-credits'), 'manage_options', 'image-credits', array(&$this, 'options_page'));
 		add_settings_section('default', '', '', 'image-credits');
 		$this->add_settings_field('better-image-credits_display', __('Display Credits', 'better-image-credits'), 'add_settings_field_display');
@@ -152,6 +220,85 @@ class BetterImageCreditsAdmin {
 				}
 			}
 		}
+	}
+
+	function enqueue_scripts($hook) {
+		if ('upload.php' !== $hook) return;
+
+		wp_enqueue_script('jquery-ui-dialog');
+		wp_enqueue_style('wp-jquery-ui-dialog');
+	}
+
+	function add_bulk_actions() { ?>
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$('select[name^="action"] option:last-child').before('<option value="set_credits"><?php echo esc_attr(__( 'Set Credits', 'better-image-credits')); ?></option>');
+				$('#doaction,#doaction2').click(function() {
+					if ($('select[name="action"]').val() == 'set_credits' ||
+							$('select[name="action2"]').val() == 'set_credits') {
+						$('#dialog-setcredits').dialog({
+							resizable: false,
+						    modal: true,
+						    buttons: {
+						      	'<?php _e('OK', 'better-image-credits'); ?>': function() {
+						        	$(this).dialog('close');
+						        	$('#dialog-setcredits input').appendTo('#posts-filter');
+						      		$('#posts-filter').submit();
+						        },
+						        '<?php _e('Cancel'); ?>': function() {
+						        	$(this).dialog('close');
+						        }
+						    }
+						 });
+						 return false;
+					}
+				});
+			});
+		</script>
+		<div id="dialog-setcredits" title="<?php _e('Set Credits', 'better-image-credits'); ?>" style="display:none">
+  			<p>
+  				<label for="credits_source"><?php _e('Credits', 'better-image-credits'); ?>:</label><br>
+  				<input type="text" class="text widefat" placeholder="<?php _e('Source name', 'better-image-credits'); ?>" name="credits_source" value="">
+  			</p>
+  			<p>
+  				<label for="credits_link"><?php _e('Link', 'better-image-credits'); ?>:</label><br>
+  				<input type="text" class="text widefat" placeholder="<?php _e('Source URL', 'better-image-credits'); ?>" name="credits_link" value="">
+  			</p>
+  			<p>
+  				<label for="license"><?php _e('License', 'better-image-credits'); ?>:</label><br>
+  				<input type="text" class="text widefat" placeholder="<?php _e('License type', 'better-image-credits'); ?>" name="license" value="">
+  			</p>
+  			<p>
+  				<label for="license_link"><?php _e('License link', 'better-image-credits'); ?>:</label><br>
+  				<input type="text" class="text widefat" placeholder="<?php _e('License URL', 'better-image-credits'); ?>" name="license_link" value="">
+  			</p>
+  		</div>
+		<?php
+	}
+
+	function set_credits() {
+		if (empty($_REQUEST['action']) || ('set_credits' != $_REQUEST['action'] &&
+				'set_credits' != $_REQUEST['action2']))
+			return;
+
+		if (empty($_REQUEST['media']) || !is_array($_REQUEST['media']))
+			return;
+
+		check_admin_referer('bulk-media');
+		$ids = array_map('intval', $_REQUEST['media']);
+
+		foreach ($ids as $id) {
+			$mime = get_post_mime_type($id);
+
+			if (preg_match('|image/.+|', $mime)) {
+				update_post_meta($id, '_wp_attachment_source_name', esc_attr($_REQUEST['credits_source']));
+				update_post_meta($id, '_wp_attachment_source_url', esc_url($_REQUEST['credits_link']));
+				update_post_meta($id, '_wp_attachment_license', esc_attr($_REQUEST['license']));
+				update_post_meta($id, '_wp_attachment_license_url', esc_url($_REQUEST['license_link']));
+			}
+		}
+
+		wp_redirect(admin_url('upload.php'));
 	}
 
 }
