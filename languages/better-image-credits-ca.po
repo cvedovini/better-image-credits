@@ -10,127 +10,140 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Better Image Credits\n"
 
-#: better-image-credits.php:30 class-admin.php:16 class-credits-widget.php:6
+#: class-admin.php:28 class-admin.php:262
+msgid "Source name"
+msgstr "Nom de la font"
+
+#: class-admin.php:33 class-admin.php:266
+msgid "Source URL"
+msgstr "URL de la font"
+
+#: class-admin.php:38 class-admin.php:270
+msgid "License type"
+msgstr "Tipus de llicència"
+
+#: class-admin.php:43 class-admin.php:274
+msgid "License URL"
+msgstr "URL Llicència"
+
+#: class-admin.php:243
+msgid "OK"
+msgstr "D&#39;acord"
+
+#: class-admin.php:248
+msgid "Cancel"
+msgstr "Cancel"
+
+#: class-admin.php:259
+msgid "Leave the fields blank to remove credits information."
+msgstr "Deixeu els camps en blanc per eliminar la informació de crèdits."
+
+#: better-image-credits.php:30 class-admin.php:84 class-admin.php:235
+#: class-admin.php:258 class-credits-widget.php:6
 msgid "Image Credits"
 msgstr "Crèdits d&#39;imatge"
 
-#: better-image-credits.php:277 class-admin.php:124
+#: class-admin.php:27 class-admin.php:192 class-admin.php:261
 msgid "Credits"
 msgstr "Crèdits"
 
-#: better-image-credits.php:280
-msgid "Source name of the image."
-msgstr "Nom de la font de la imatge."
-
-#: better-image-credits.php:284
+#: class-admin.php:32 class-admin.php:265
 msgid "Link"
 msgstr "Vincle"
 
-#: better-image-credits.php:287
-msgid "URL where the original image was found."
-msgstr "URL on es va trobar la imatge original."
-
-#: better-image-credits.php:291 class-admin.php:125
+#: class-admin.php:37 class-admin.php:193 class-admin.php:269
 msgid "License"
 msgstr "Llicència"
 
-#: better-image-credits.php:294
-msgid "License for this image."
-msgstr "Llicència d&#39;aquesta imatge."
-
-#: better-image-credits.php:298
+#: class-admin.php:42 class-admin.php:273
 msgid "License link"
 msgstr "Enllaç llicència"
 
-#: better-image-credits.php:301
-msgid "Link to the license."
-msgstr "Enllaç a la llicència."
-
-#: class-admin.php:16 class-admin.php:82
+#: class-admin.php:84 class-admin.php:150
 msgid "Image Credits Options"
 msgstr "Imatge Crèdits Opcions"
 
-#: class-admin.php:18
+#: class-admin.php:86
 msgid "Display Credits"
 msgstr "Mostrar Crèdits"
 
-#: class-admin.php:19
+#: class-admin.php:87
 msgid "Template"
 msgstr "Plantilla"
 
-#: class-admin.php:20
+#: class-admin.php:88
 msgid "Separator"
 msgstr "Separador"
 
-#: class-admin.php:21
+#: class-admin.php:89
 msgid "Before"
 msgstr "Davant"
 
-#: class-admin.php:22
+#: class-admin.php:90
 msgid "After"
 msgstr "Després"
 
-#: class-admin.php:32
+#: class-admin.php:100
 msgid "Settings"
 msgstr "Configuració"
 
-#: class-admin.php:39
+#: class-admin.php:107
 msgid "Before the content"
 msgstr "Abans que el contingut"
 
-#: class-admin.php:42
+#: class-admin.php:110
 msgid "After the content"
 msgstr "Després que el contingut"
 
-#: class-admin.php:45
+#: class-admin.php:113
 msgid "Overlay on images (results may vary depending on your theme)"
 msgstr "Superposició d&#39;imatges (els resultats poden variar depenent del seu tema)"
 
-#: class-admin.php:48
+#: class-admin.php:116
 msgid "Include credits for header image (support for header image depends on you theme)."
 msgstr "Crèdits imatge de capçalera per a incloure (suport d&#39;imatges de capçalera per depèn que el tema)."
 
-#: class-admin.php:51
+#: class-admin.php:119
 msgid "Include credits for background image (support for background image depends on you theme)."
 msgstr "Crèdits imatge de fons per a incloure (suport d&#39;imatges de fons per a depèn que el tema)."
 
-#: class-admin.php:52
+#: class-admin.php:120
 msgid "Choose how you want to display the image credits"
 msgstr "Triau la manera com voleu mostrar els crèdits d&#39;imatge"
 
-#: class-admin.php:58
+#: class-admin.php:126
 msgid "HTML to output each individual credit line. Use [title], [source], [link], [license] or [license_link] as placeholders."
 msgstr "HTML a la sortida de cada línia de crèdit individual. Utilitzeu [títol], [font], [link], [la llicència] o [license_link] com a marcadors de posició."
 
-#: class-admin.php:64
+#: class-admin.php:132
 msgid "HTML to separate the credits (enter leading and trailing spaces using HTML entities)."
 msgstr "HTML per separar els crèdits (introduir espais inicials i finals utilitzant entitats HTML)."
 
-#: class-admin.php:70
+#: class-admin.php:138
 msgid "HTML to output before the credits (enter leading and trailing spaces using HTML entities)."
 msgstr "HTML a la sortida abans dels crèdits (introduir espais inicials i finals utilitzant entitats HTML)."
 
-#: class-admin.php:76
+#: class-admin.php:144
 msgid "HTML to output after the credits (enter leading and trailing spaces using HTML entities)."
 msgstr "HTML a la sortida després dels crèdits (introduir espais inicials i finals utilitzant entitats HTML)."
 
-#: class-admin.php:85
+#: class-admin.php:153
 msgid "Options"
 msgstr "Opcions"
 
-#: class-admin.php:98
+#: class-admin.php:166
 msgid "Do you like this Plugin?"
 msgstr "¿T'agrada aquest plugin?"
 
-#: class-admin.php:100
+#: class-admin.php:168
 msgid "Please consider a donation."
 msgstr "Si us plau, considera una donació"
 
-#: class-admin.php:110
+#: class-admin.php:178
 msgid "We also need volunteers to translate that plugin into more languages."
 msgstr "També necessitem més voluntaris per a traduir aquest plugin a més idiomes."
 
-#: class-admin.php:111
+#: class-admin.php:179
 msgid "If you wish to help then contact <a href=\"https://twitter.com/cvedovini\">@cvedovini</a> on Twitter or use that <a href=\"http://vdvn.me/contact/\">contact form</a>."
 msgstr "Si vols ajudar a continuació, posar-se en contacte <a href=\"https://twitter.com/cvedovini\">concvedovini</a> a Twitter o utilitzar aquest <a href=\"http://vdvn.me/contact/\">formulari de contacte.</a>"
 
@@ -138,7 +151,7 @@ msgstr "Si vols ajudar a continuació, posar-se en contacte <a href=\"https://tw
 msgid "A widget displaying the image credits"
 msgstr "Un giny que mostra els crèdits d&#39;imatge"
 
-#: class-credits-widget.php:41
+#: class-credits-widget.php:47
 msgid "Title:"
 msgstr "Títol:"
 

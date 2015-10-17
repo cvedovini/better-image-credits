@@ -47,8 +47,8 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 = Version 1.7 =
 - Added the possibility to set the credits in bulk in the media library. Open
 the media library, choose the list mode then in the "Bulk Actions" dropdown
-choose the "Set Credits" action. Select the images you want to update and press
-the "Apply" button.
+choose the "Image Credits" action. Select the images you want to update and
+press the "Apply" button.
 
 = Version 1.6.1 =
 - Totally masking the widget when there is no credit

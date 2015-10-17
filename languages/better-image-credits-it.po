@@ -10,127 +10,140 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Better Image Credits\n"
 
-#: better-image-credits.php:30 class-admin.php:16 class-credits-widget.php:6
+#: class-admin.php:28 class-admin.php:262
+msgid "Source name"
+msgstr "Nome della sorgente"
+
+#: class-admin.php:33 class-admin.php:266
+msgid "Source URL"
+msgstr "URL di origine"
+
+#: class-admin.php:38 class-admin.php:270
+msgid "License type"
+msgstr "Tipo di licenza"
+
+#: class-admin.php:43 class-admin.php:274
+msgid "License URL"
+msgstr "Licenza URL"
+
+#: class-admin.php:243
+msgid "OK"
+msgstr "ok"
+
+#: class-admin.php:248
+msgid "Cancel"
+msgstr "Annullare"
+
+#: class-admin.php:259
+msgid "Leave the fields blank to remove credits information."
+msgstr "Lasciare i campi vuoti per rimuovere le informazioni crediti."
+
+#: better-image-credits.php:30 class-admin.php:84 class-admin.php:235
+#: class-admin.php:258 class-credits-widget.php:6
 msgid "Image Credits"
 msgstr "Opzioni dei crediti dell'immagine"
 
-#: better-image-credits.php:277 class-admin.php:124
+#: class-admin.php:27 class-admin.php:192 class-admin.php:261
 msgid "Credits"
 msgstr "Crediti"
 
-#: better-image-credits.php:280
-msgid "Source name of the image."
-msgstr "Nome originale dell'immagine"
-
-#: better-image-credits.php:284
+#: class-admin.php:32 class-admin.php:265
 msgid "Link"
 msgstr "Link"
 
-#: better-image-credits.php:287
-msgid "URL where the original image was found."
-msgstr "URL dell'immagine originale"
-
-#: better-image-credits.php:291 class-admin.php:125
+#: class-admin.php:37 class-admin.php:193 class-admin.php:269
 msgid "License"
 msgstr "Licenza"
 
-#: better-image-credits.php:294
-msgid "License for this image."
-msgstr "Licenza per questa immagine."
-
-#: better-image-credits.php:298
+#: class-admin.php:42 class-admin.php:273
 msgid "License link"
 msgstr "Link licenza"
 
-#: better-image-credits.php:301
-msgid "Link to the license."
-msgstr "Link alla licenza."
-
-#: class-admin.php:16 class-admin.php:82
+#: class-admin.php:84 class-admin.php:150
 msgid "Image Credits Options"
 msgstr "Opzioni dei crediti dell'immagine"
 
-#: class-admin.php:18
+#: class-admin.php:86
 msgid "Display Credits"
 msgstr "Visualizzazione dei crediti"
 
-#: class-admin.php:19
+#: class-admin.php:87
 msgid "Template"
 msgstr "Modello"
 
-#: class-admin.php:20
+#: class-admin.php:88
 msgid "Separator"
 msgstr "Separatore"
 
-#: class-admin.php:21
+#: class-admin.php:89
 msgid "Before"
 msgstr "Prima"
 
-#: class-admin.php:22
+#: class-admin.php:90
 msgid "After"
 msgstr "Dopo"
 
-#: class-admin.php:32
+#: class-admin.php:100
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: class-admin.php:39
+#: class-admin.php:107
 msgid "Before the content"
 msgstr "Prima del contenuto"
 
-#: class-admin.php:42
+#: class-admin.php:110
 msgid "After the content"
 msgstr "Dopo il contenuto"
 
-#: class-admin.php:45
+#: class-admin.php:113
 msgid "Overlay on images (results may vary depending on your theme)"
 msgstr "Sovrapposto all'immagine (i risultati possono variare in funzione del tuo tema)"
 
-#: class-admin.php:48
+#: class-admin.php:116
 msgid "Include credits for header image (support for header image depends on you theme)."
 msgstr "Includi crediti header image per (supporto per le immagini di intestazione per dipende da voi a tema)."
 
-#: class-admin.php:51
+#: class-admin.php:119
 msgid "Include credits for background image (support for background image depends on you theme)."
 msgstr "Includi crediti immagine di sfondo per la (supporto immagine di sfondo per dipende da voi a tema)."
 
-#: class-admin.php:52
+#: class-admin.php:120
 msgid "Choose how you want to display the image credits"
 msgstr "Scegli come visualizzare i crediti dell'immagine"
 
-#: class-admin.php:58
+#: class-admin.php:126
 msgid "HTML to output each individual credit line. Use [title], [source], [link], [license] or [license_link] as placeholders."
 msgstr "HTML per uscita ogni linea di credito individuale. Usare [titolo], [fonte], [link], [licenza] o [license_link] come segnaposto."
 
-#: class-admin.php:64
+#: class-admin.php:132
 msgid "HTML to separate the credits (enter leading and trailing spaces using HTML entities)."
 msgstr "HTML per separare i crediti (inserire uno spazio iniziale e finale usando le entità HTML)."
 
-#: class-admin.php:70
+#: class-admin.php:138
 msgid "HTML to output before the credits (enter leading and trailing spaces using HTML entities)."
 msgstr "HTML da inserire prima dei crediti (inserire uno spazio iniziale e finale usando le entità HTML)."
 
-#: class-admin.php:76
+#: class-admin.php:144
 msgid "HTML to output after the credits (enter leading and trailing spaces using HTML entities)."
 msgstr "HTML da inserire dopo i crediti (inserire uno spazio iniziale e finale usando le entità HTML)."
 
-#: class-admin.php:85
+#: class-admin.php:153
 msgid "Options"
 msgstr "Opzioni"
 
-#: class-admin.php:98
+#: class-admin.php:166
 msgid "Do you like this Plugin?"
 msgstr "Ti piace questo Plugin?"
 
-#: class-admin.php:100
+#: class-admin.php:168
 msgid "Please consider a donation."
 msgstr "Per favore, considera la possibilità di fare una donazione."
 
-#: class-admin.php:110
+#: class-admin.php:178
 msgid "We also need volunteers to translate that plugin into more languages."
 msgstr "Abbiamo anche bisogno di volontari per tradurre questo plugin in altre lingue."
 
-#: class-admin.php:111
+#: class-admin.php:179
 msgid "If you wish to help then contact <a href=\"https://twitter.com/cvedovini\">@cvedovini</a> on Twitter or use that <a href=\"http://vdvn.me/contact/\">contact form</a>."
 msgstr "Se vuoi aiutare <a href=\"https://twitter.com/cvedovini\">contattarecvedovini</a> su Twitter oppure utilizzare tale <a href=\"http://vdvn.me/contact/\">modulo di contatto.</a>"
 
@@ -138,7 +151,7 @@ msgstr "Se vuoi aiutare <a href=\"https://twitter.com/cvedovini\">contattarecved
 msgid "A widget displaying the image credits"
 msgstr "Un widget che visualizza le image credits"
 
-#: class-credits-widget.php:41
+#: class-credits-widget.php:47
 msgid "Title:"
 msgstr "Titolo:"
 

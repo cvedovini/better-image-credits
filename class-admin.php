@@ -14,8 +14,8 @@ class BetterImageCreditsAdmin {
 
 		add_action('admin_footer-upload.php', array(&$this, 'add_bulk_actions'));
 		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
-		add_action('admin_action_set_credits', array(&$this, 'set_credits'));
-		add_action('admin_action_-1', array(&$this, 'set_credits')); // Bottom dropdown (assumes top dropdown = default value)
+		add_action('admin_action_bulk_credits', array(&$this, 'bulk_credits'));
+		add_action('admin_action_-1', array(&$this, 'bulk_credits')); // Bottom dropdown (assumes top dropdown = default value)
 	}
 
 	function add_fields($form_fields, $post) {
@@ -232,17 +232,17 @@ class BetterImageCreditsAdmin {
 	function add_bulk_actions() { ?>
 		<script type="text/javascript">
 			jQuery(document).ready(function($){
-				$('select[name^="action"] option:last-child').before('<option value="set_credits"><?php echo esc_attr(__( 'Set Credits', 'better-image-credits')); ?></option>');
+				$('select[name^="action"] option:last-child').before('<option value="bulk_credits"><?php echo esc_attr(__( 'Image Credits', 'better-image-credits')); ?></option>');
 				$('#doaction,#doaction2').click(function() {
-					if ($('select[name="action"]').val() == 'set_credits' ||
-							$('select[name="action2"]').val() == 'set_credits') {
-						$('#dialog-setcredits').dialog({
+					if ($('select[name="action"]').val() == 'bulk_credits' ||
+							$('select[name="action2"]').val() == 'bulk_credits') {
+						$('#dialog-credits').dialog({
 							resizable: false,
 						    modal: true,
 						    buttons: {
 						      	'<?php _e('OK', 'better-image-credits'); ?>': function() {
 						        	$(this).dialog('close');
-						        	$('#dialog-setcredits input').appendTo('#posts-filter');
+						        	$('#dialog-credits input').appendTo('#posts-filter');
 						      		$('#posts-filter').submit();
 						        },
 						        '<?php _e('Cancel'); ?>': function() {
@@ -255,7 +255,8 @@ class BetterImageCreditsAdmin {
 				});
 			});
 		</script>
-		<div id="dialog-setcredits" title="<?php _e('Set Credits', 'better-image-credits'); ?>" style="display:none">
+		<div id="dialog-credits" title="<?php _e('Image Credits', 'better-image-credits'); ?>" style="display:none">
+			<p><?php _e('Leave the fields blank to remove credits information.', 'better-image-credit'); ?></p>
   			<p>
   				<label for="credits_source"><?php _e('Credits', 'better-image-credits'); ?>:</label><br>
   				<input type="text" class="text widefat" placeholder="<?php _e('Source name', 'better-image-credits'); ?>" name="credits_source" value="">
@@ -276,9 +277,9 @@ class BetterImageCreditsAdmin {
 		<?php
 	}
 
-	function set_credits() {
-		if (empty($_REQUEST['action']) || ('set_credits' != $_REQUEST['action'] &&
-				'set_credits' != $_REQUEST['action2']))
+	function bulk_credits() {
+		if (empty($_REQUEST['action']) || ('bulk_credits' != $_REQUEST['action'] &&
+				'bulk_credits' != $_REQUEST['action2']))
 			return;
 
 		if (empty($_REQUEST['media']) || !is_array($_REQUEST['media']))
