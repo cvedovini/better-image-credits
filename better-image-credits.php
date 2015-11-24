@@ -3,7 +3,7 @@
 Plugin Name: Better Image Credits
 Plugin URI: http://vdvn.me/pga
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
-Version: 1.7
+Version: 1.8
 Author: Claude Vedovini
 Author URI: http://vdvn.me/
 License: GPLv3

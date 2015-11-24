@@ -4,7 +4,7 @@ Contributors: cvedovini
 Donate link: http://paypal.me/vdvn
 Tags: image, media, credits
 Requires at least: 3.0
-Tested up to: 4.3.1
+Tested up to: 4.4
 Stable tag: 1.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -43,6 +43,11 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 
 == Changelog ==
+
+= Version 1.8 =
+- The search box in the media library now allows searches through the credits
+fields `source` and `license`
+- Plugin now uses only one row in the options' table
 
 = Version 1.7 =
 - Added the possibility to set the credits in bulk in the media library. Open

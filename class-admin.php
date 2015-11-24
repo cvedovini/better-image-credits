@@ -12,6 +12,11 @@ class BetterImageCreditsAdmin {
 		add_action('manage_media_custom_column', array(&$this, 'manage_media_custom_column'), 10, 2);
 		add_action('admin_menu', array(&$this, 'admin_menu'));
 
+		global $pagenow;
+		if ('upload.php' == $pagenow) {
+			add_filter('posts_search',  array(&$this, 'media_search'));
+		}
+
 		add_action('admin_footer-upload.php', array(&$this, 'add_bulk_actions'));
 		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 		add_action('admin_action_bulk_credits', array(&$this, 'bulk_credits'));
@@ -304,6 +309,22 @@ class BetterImageCreditsAdmin {
 		}
 
 		wp_redirect(admin_url('upload.php'));
+	}
+
+	function media_search($search) {
+		global $wpdb;
+
+		// Original search string:
+		// AND (((wp_posts.post_title LIKE '%search-string%') OR (wp_posts.post_content LIKE '%search-string%')))
+		$s = get_query_var('s');
+		$extra = "{$wpdb->posts}.ID IN (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key IN ('_wp_attachment_source_name', '_wp_attachment_license') AND meta_value LIKE '%{$s}%')";
+		$search = str_replace(
+				'AND ((',
+				'AND (((' . $extra . ') OR ',
+				$search
+		);
+
+		return $search;
 	}
 
 }
