@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Better Image Credits
-Plugin URI: http://vedovini.net/plugins/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
+Plugin URI: http://vdvn.me/pga
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
-Version: 1.5.1
+Version: 1.8
 Author: Claude Vedovini
-Author URI: http://vedovini.net/?utm_source=wordpress&utm_medium=plugin&utm_campaign=better-image-credits
+Author URI: http://vdvn.me/
 License: GPLv3
 Text Domain: better-image-credits
 
@@ -26,10 +26,21 @@ Text Domain: better-image-credits
 */
 
 
-define('IMAGE_CREDITS_TEMPLATE', get_option('better-image-credits_template', '<a href="[link]" target="_blank">[source]</a>'));
-define('IMAGE_CREDITS_SEP', get_option('better-image-credits_sep', ',&#32;'));
-define('IMAGE_CREDITS_BEFORE', get_option('better-image-credits_before', '<p class="image-credits">' . __('Image Credits', 'better-image-credits') . ':&#32;'));
-define('IMAGE_CREDITS_AFTER', get_option('better-image-credits_after', '.</p>'));
+function bic_get_option($option, $default) {
+	$options = get_option('better-image-credits-options');
+
+	if ($options && is_array($options)) {
+		return (isset($options[$option])) ? $options[$option] : $default;
+	}
+
+	return get_option('better-image-credits_' . $option, $default);
+}
+
+
+define('IMAGE_CREDITS_TEMPLATE', bic_get_option('template', '<a href="[link]" target="_blank">[source]</a>'));
+define('IMAGE_CREDITS_SEP', bic_get_option('sep', ',&#32;'));
+define('IMAGE_CREDITS_BEFORE', bic_get_option('before', '<p class="image-credits">' . __('Image Credits', 'better-image-credits') . ':&#32;'));
+define('IMAGE_CREDITS_AFTER', bic_get_option('after', '.</p>'));
 
 define('IMAGE_CREDIT_BEFORE_CONTENT', 'before');
 define('IMAGE_CREDIT_AFTER_CONTENT', 'after');
@@ -37,14 +48,28 @@ define('IMAGE_CREDIT_OVERLAY', 'overlay');
 define('IMAGE_CREDIT_INCLUDE_BACKGROUND', 'background');
 define('IMAGE_CREDIT_INCLUDE_HEADER', 'header');
 
-include 'class-credits-widget.php';
+add_action('plugins_loaded', array('BetterImageCreditsPlugin', 'get_instance'));
 
 class BetterImageCreditsPlugin {
+
+	private static $instance;
+
+	public static function get_instance() {
+		if (!self::$instance) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 
 	function __construct() {
 		add_action('init', array($this, 'init'));
 		add_action('widgets_init', array(&$this, 'widgets_init'));
-		add_action('admin_init', array(&$this, 'admin_init'));
+
+		if (is_admin()) {
+			require_once 'class-admin.php';
+			$this->admin = new BetterImageCreditsAdmin($this);
+		}
 	}
 
 	function init() {
@@ -73,12 +98,8 @@ class BetterImageCreditsPlugin {
 	}
 
 	function widgets_init() {
+		include 'class-credits-widget.php';
 		register_widget('BetterImageCreditsWidget');
-	}
-
-	function admin_init() {
-		require_once 'class-admin.php';
-		$this->admin = new BetterImageCreditsAdmin($this);
 	}
 
 	function smarter_load_textdomain($mofile, $domain) {
@@ -102,12 +123,12 @@ class BetterImageCreditsPlugin {
 	}
 
 	function display_option($option) {
-		$options = get_option('better-image-credits_display', array());
+		$options = bic_get_option('display', array());
 		if (!is_array($options)) $options = array($options);
 		return in_array($option, $options);
 	}
 
-	function get_image_credits() {
+	function get_image_credits($template=IMAGE_CREDITS_TEMPLATE) {
 		global $post;
 		$post_thumbnail_id = 0;
 		$attachment_ids = array();
@@ -192,13 +213,15 @@ class BetterImageCreditsPlugin {
 
 			if (!empty($source)) {
 				$credits[$id] = str_replace(
-						array('[title]', '[source]', '[link]', '[license]', '[license_link]'),
-						array($title, $source, $link, $license, $license_link),
-						IMAGE_CREDITS_TEMPLATE);
+						array('[title]', '[source]', '[link]', '[license]', '[license_link]',
+								'{title}', '{source}', '{link}', '{license}', '{license_link}'),
+						array($title, $source, $link, $license, $license_link,
+								$title, $source, $link, $license, $license_link),
+						$template);
 			}
 		}
 
-		return array_unique($credits);
+		return $credits;
 	}
 
 	function credits_shortcode($atts) {
@@ -206,17 +229,22 @@ class BetterImageCreditsPlugin {
 				'sep' => IMAGE_CREDITS_SEP,
 				'before' => IMAGE_CREDITS_BEFORE,
 				'after'  => IMAGE_CREDITS_AFTER,
+				'template' => IMAGE_CREDITS_TEMPLATE
 		), $atts, 'image-credits'));
 
-		return $this->the_image_credits($sep, $before, $after);
+		return $this->the_image_credits($sep, $before, $after, $template);
 	}
 
-	function the_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE, $after=IMAGE_CREDITS_AFTER) {
-		return $this->format_credits($this->get_image_credits(), $sep, $before, $after);
+	function the_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE,
+			$after=IMAGE_CREDITS_AFTER, $template=IMAGE_CREDITS_TEMPLATE) {
+		return $this->format_credits($this->get_image_credits($template), $sep,
+				$before, $after);
 	}
 
-	function format_credits($credits, $sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE, $after=IMAGE_CREDITS_AFTER) {
+	function format_credits($credits, $sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE,
+			$after=IMAGE_CREDITS_AFTER) {
 		if (!empty($credits)) {
+			$credits = array_unique($credits);
 			$credits = implode($sep, $credits);
 			return $before . $credits. $after;;
 		}
@@ -250,80 +278,23 @@ class BetterImageCreditsPlugin {
 		return $attr;
 	}
 
-	function add_fields($form_fields, $post) {
-		$form_fields['credits_source'] = array(
-				'label' => __( 'Credits', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_name', true),
-				'helps' => __( 'Source name of the image.', 'better-image-credits' )
-		);
-
-		$form_fields['credits_link'] = array(
-				'label' => __( 'Link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_source_url', true),
-				'helps' => __( 'URL where the original image was found.', 'better-image-credits' )
-		);
-
-		$form_fields['license'] = array(
-				'label' => __( 'License', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license', true),
-				'helps' => __( 'License for this image.', 'better-image-credits' )
-		);
-
-		$form_fields['license_link'] = array(
-				'label' => __( 'License link', 'better-image-credits' ),
-				'input' => 'text',
-				'value' => get_post_meta($post->ID, '_wp_attachment_license_url', true),
-				'helps' => __( 'Link to the license.', 'better-image-credits' )
-		);
-
-		return $form_fields;
-	}
-
-	function save_fields($post, $attachment) {
-		if (isset($attachment['credits_source'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_name',
-					esc_attr($attachment['credits_source']));
-		}
-
-		if (isset($attachment['credits_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_source_url',
-					esc_url($attachment['credits_link']));
-		}
-
-		if (isset($attachment['license'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license',
-					esc_attr($attachment['license']));
-		}
-
-		if (isset($attachment['license_link'])) {
-			update_post_meta($post['ID'], '_wp_attachment_license_url',
-					esc_attr($attachment['license_link']));
-		}
-
-		return $post;
-
-	}
-
 }
-
-global $the_better_image_credits_plugin;
-$the_better_image_credits_plugin = new BetterImageCreditsPlugin();
 
 /**
  * Legacy template tag for compatibility with the image-credits plugin
  */
-function get_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE, $after=IMAGE_CREDITS_AFTER) {
-	the_image_credits($sep, $before, $after);
+function get_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE,
+		$after=IMAGE_CREDITS_AFTER, $template=IMAGE_CREDITS_TEMPLATE) {
+	the_image_credits($sep, $before, $after, $template);
 }
 
-function the_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE, $after=IMAGE_CREDITS_AFTER) {
-	echo get_the_image_credits($sep, $before, $after);
+function the_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE,
+		$after=IMAGE_CREDITS_AFTER, $template=IMAGE_CREDITS_TEMPLATE) {
+	echo get_the_image_credits($sep, $before, $after, $template);
 }
 
-function get_the_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE, $after=IMAGE_CREDITS_AFTER) {
-	global $the_better_image_credits_plugin;
-	return $the_better_image_credits_plugin->the_image_credits($sep, $before, $after);
+function get_the_image_credits($sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE,
+		$after=IMAGE_CREDITS_AFTER, $template=IMAGE_CREDITS_TEMPLATE) {
+	$plugin = BetterImageCreditsPlugin::get_instance();
+	return $plugin->the_image_credits($sep, $before, $after, $template);
 }
