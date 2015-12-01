@@ -48,6 +48,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 - The search box in the media library now allows searches through the credits
 fields `source` and `license`
 - Plugin now uses only one row in the options' table
+- Fixed bug that prevents ovelayed credits to properly display when multiple
+images have the same credits
+- Added template-related settings to the credits widget
 
 = Version 1.7 =
 - Added the possibility to set the credits in bulk in the media library. Open

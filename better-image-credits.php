@@ -221,7 +221,7 @@ class BetterImageCreditsPlugin {
 			}
 		}
 
-		return array_unique($credits);
+		return $credits;
 	}
 
 	function credits_shortcode($atts) {
@@ -244,6 +244,7 @@ class BetterImageCreditsPlugin {
 	function format_credits($credits, $sep=IMAGE_CREDITS_SEP, $before=IMAGE_CREDITS_BEFORE,
 			$after=IMAGE_CREDITS_AFTER) {
 		if (!empty($credits)) {
+			$credits = array_unique($credits);
 			$credits = implode($sep, $credits);
 			return $before . $credits. $after;;
 		}

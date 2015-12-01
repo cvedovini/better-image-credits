@@ -130,28 +130,28 @@ class BetterImageCreditsAdmin {
 	function field_template($args) {
 		extract($args); ?>
 		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
-			value="<?php echo htmlspecialchars(IMAGE_CREDITS_TEMPLATE); ?>" /></p>
+			value="<?php echo esc_attr(IMAGE_CREDITS_TEMPLATE); ?>" /></p>
 		<p><em><?php _e('HTML to output each individual credit line. Use [title], [source], [link], [license] or [license_link] as placeholders.', 'better-image-credits'); ?></em></p><?php
 	}
 
 	function field_sep($args) {
 		extract($args); ?>
 		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
-			value="<?php echo htmlspecialchars(IMAGE_CREDITS_SEP); ?>" /></p>
+			value="<?php echo esc_attr(IMAGE_CREDITS_SEP); ?>" /></p>
 		<p><em><?php _e('HTML to separate the credits (enter leading and trailing spaces using HTML entities).', 'better-image-credits'); ?></em></p><?php
 	}
 
 	function field_before($args) {
 		extract($args); ?>
 		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
-			value="<?php echo htmlspecialchars(IMAGE_CREDITS_BEFORE); ?>" /></p>
+			value="<?php echo esc_attr(IMAGE_CREDITS_BEFORE); ?>" /></p>
 		<p><em><?php _e('HTML to output before the credits (enter leading and trailing spaces using HTML entities).', 'better-image-credits'); ?></em></p><?php
 	}
 
 	function field_after($args) {
 		extract($args); ?>
 		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
-			value="<?php echo htmlspecialchars(IMAGE_CREDITS_AFTER); ?>" /></p>
+			value="<?php echo esc_attr(IMAGE_CREDITS_AFTER); ?>" /></p>
 		<p><em><?php _e('HTML to output after the credits (enter leading and trailing spaces using HTML entities).', 'better-image-credits'); ?></em></p><?php
 	}
 
