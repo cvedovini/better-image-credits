@@ -86,14 +86,15 @@ class BetterImageCreditsAdmin {
 	}
 
 	function admin_menu() {
-		add_submenu_page('options-general.php', __('Image Credits Options', 'better-image-credits'), __('Image Credits', 'better-image-credits'), 'manage_options', 'image-credits', array(&$this, 'options_page'));
+		$this->option_hook = add_submenu_page('options-general.php', __('Image Credits Options', 'better-image-credits'), __('Image Credits', 'better-image-credits'), 'manage_options', 'image-credits', array(&$this, 'options_page'));
 		add_settings_section('default', '', '', 'image-credits');
-		register_setting('image-credits', 'better-image-credits-options');
+		register_setting('image-credits', 'better-image-credits-options', array(&$this, 'validate_settings'));
 		$this->add_settings_field('display', __('Display Credits', 'better-image-credits'));
 		$this->add_settings_field('template', __('Template', 'better-image-credits'));
 		$this->add_settings_field('sep', __('Separator', 'better-image-credits'));
 		$this->add_settings_field('before', __('Before', 'better-image-credits'));
 		$this->add_settings_field('after', __('After', 'better-image-credits'));
+		$this->add_settings_field('overlay_color', __('Overlay color', 'better-image-credits'));
 	}
 
 	function add_settings_field($id, $title) {
@@ -153,6 +154,35 @@ class BetterImageCreditsAdmin {
 		<p><input type="text" name="<?php echo $field_name; ?>" class="large-text code"
 			value="<?php echo esc_attr(IMAGE_CREDITS_AFTER); ?>" /></p>
 		<p><em><?php _e('HTML to output after the credits (enter leading and trailing spaces using HTML entities).', 'better-image-credits'); ?></em></p><?php
+	}
+
+	function field_overlay_color($args) {
+			extract($args); ?>
+			<p><input type="text" id="overlay_color" name="<?php echo $field_name; ?>" value="<?php echo esc_attr(IMAGE_CREDITS_OVERLAY_COLOR); ?>" /></p>
+			<p><em><?php _e('The background color of the credit overlay.', 'better-image-credits'); ?></em></p>
+			<script>
+				(function($) {
+			    	$(function() {
+			        	$('#overlay_color').wpColorPicker();
+			    	});
+				})(jQuery);
+			</script><?php
+	}
+
+	function validate_settings($fields) {
+		$overlay_color = trim($fields['overlay_color']);
+		$overlay_color = strip_tags(stripslashes($overlay_color) );
+
+		// Check if is a valid hex color
+		if (empty($overlay_color) || preg_match( '/^#[a-f0-9]{6}$/i', $overlay_color)) {
+			$fields['better-image-credits-options[overlay_color]'] = $overlay_color;
+		} else {
+			$message = sprintf(__('The background color for the overlay is invalid (%s)', 'better-image-credits'), $overlay_color);
+			add_settings_error('image-credits', 'overlay_color', $message, 'error');
+			$fields['overlay_color'] = IMAGE_CREDITS_OVERLAY_COLOR;
+		}
+
+		return $fields;
 	}
 
 	function options_page() { ?>
@@ -232,10 +262,16 @@ class BetterImageCreditsAdmin {
 	}
 
 	function enqueue_scripts($hook) {
-		if ('upload.php' !== $hook) return;
+		if ('upload.php' == $hook) {
+			wp_enqueue_script('jquery-ui-dialog');
+			wp_enqueue_style('wp-jquery-ui-dialog');
+		}
 
-		wp_enqueue_script('jquery-ui-dialog');
-		wp_enqueue_style('wp-jquery-ui-dialog');
+		if ($this->option_hook == $hook) {
+			// Add the color picker css and js file
+	        wp_enqueue_style('wp-color-picker');
+	        wp_enqueue_script('wp-color-picker');
+		}
 	}
 
 	function add_bulk_actions() { ?>

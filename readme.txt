@@ -3,7 +3,7 @@ Author: Claude Vedovini
 Contributors: cvedovini
 Donate link: http://paypal.me/vdvn
 Tags: image, media, credits
-Requires at least: 3.0
+Requires at least: 3.5
 Tested up to: 4.4
 Stable tag: 1.8
 License: GPLv3
@@ -43,6 +43,9 @@ method](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins):
 
 
 == Changelog ==
+
+= Version 1.9 =
+- Added a setting to pick-up the color of the overlay background
 
 = Version 1.8 =
 - The search box in the media library now allows searches through the credits

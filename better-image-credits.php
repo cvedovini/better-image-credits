@@ -3,7 +3,7 @@
 Plugin Name: Better Image Credits
 Plugin URI: http://vdvn.me/pga
 Description: Adds credits and link fields for media uploads along with a shortcode and various options to display image credits in your posts.
-Version: 1.8
+Version: 1.9
 Author: Claude Vedovini
 Author URI: http://vdvn.me/
 License: GPLv3
@@ -41,6 +41,7 @@ define('IMAGE_CREDITS_TEMPLATE', bic_get_option('template', '<a href="[link]" ta
 define('IMAGE_CREDITS_SEP', bic_get_option('sep', ',&#32;'));
 define('IMAGE_CREDITS_BEFORE', bic_get_option('before', '<p class="image-credits">' . __('Image Credits', 'better-image-credits') . ':&#32;'));
 define('IMAGE_CREDITS_AFTER', bic_get_option('after', '.</p>'));
+define('IMAGE_CREDITS_OVERLAY_COLOR', bic_get_option('overlay_color', ''));
 
 define('IMAGE_CREDIT_BEFORE_CONTENT', 'before');
 define('IMAGE_CREDIT_AFTER_CONTENT', 'after');
@@ -261,12 +262,14 @@ class BetterImageCreditsPlugin {
 		}
 
 		if ($this->display_option(IMAGE_CREDIT_AFTER_CONTENT)) {
-			$content = $content . $output;
+			$content .= $output;
 		}
 
 		if ($this->display_option(IMAGE_CREDIT_OVERLAY)) {
+			$style = (IMAGE_CREDITS_OVERLAY_COLOR) ? ' style="background-color:' . IMAGE_CREDITS_OVERLAY_COLOR . '"' : '';
+
 			foreach ($credits as $id => $c) {
-				$content = $content . '<div class="credits-overlay" data-target=".wp-image-' . $id . '">' . $c . '</div>';
+				$content .= '<div class="credits-overlay"' . $style . ' data-target=".wp-image-' . $id . '">' . $c . '</div>';
 			}
 		}
 
